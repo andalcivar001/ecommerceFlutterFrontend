@@ -1,16 +1,23 @@
+import 'package:ecommerce_flutter/src/data/dataSource/remote/services/AuthService.dart';
+import 'package:ecommerce_flutter/src/domain/models/AuthResponse.dart';
+import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/auth/login/LoginBlocState.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
 class LoginBlocCubit extends Cubit<LoginBlocState> {
   LoginBlocCubit() : super(LoginInitial());
+
+  AuthService authService = AuthService();
   // Aquí puedes agregar métodos para manejar eventos y estados
   final _emailController = BehaviorSubject<String>();
   final _passwordController = BehaviorSubject<String>();
+  final _responseController = BehaviorSubject<Resource>();
 
   // Getters para acceder a los streams
   Stream<String> get emailStream => _emailController.stream;
   Stream<String> get passwordStream => _passwordController.stream;
+  Stream<Resource> get responseStream => _responseController.stream;
 
   // Metodos para acceder a los valores actuales
   void changeEmail(String email) {
@@ -42,8 +49,17 @@ class LoginBlocCubit extends Cubit<LoginBlocState> {
     changePassword('');
   }
 
-  void login() {
-    print('email: ${_emailController.value}');
-    print('password: ${_passwordController.value}');
+  void login() async {
+    _responseController.add(Loading());
+    await Future.delayed(Duration(seconds: 4), () {});
+    Resource response = await authService.login(
+      _emailController.value,
+      _passwordController.value,
+    );
+    _responseController.add(response);
+    Future.delayed(Duration(seconds: 1), () {
+      _responseController.add(Initial());
+    });
+    print('response: $response');
   }
 }

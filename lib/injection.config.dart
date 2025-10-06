@@ -14,6 +14,8 @@ import 'package:ecommerce_flutter/src/data/dataSource/remote/services/AuthServic
 import 'package:ecommerce_flutter/src/di/appModule.dart' as _i896;
 import 'package:ecommerce_flutter/src/domain/repository/AuthRepository.dart'
     as _i148;
+import 'package:ecommerce_flutter/src/domain/useCases/auth/AuthUseCases.dart'
+    as _i322;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -27,6 +29,7 @@ extension GetItInjectableX on _i174.GetIt {
     final appmodule = _$Appmodule();
     gh.factory<_i543.AuthService>(() => appmodule.authService);
     gh.factory<_i148.Authrepository>(() => appmodule.authrepository);
+    gh.factory<_i322.AuthUseCases>(() => appmodule.authuseCases);
     return this;
   }
 }

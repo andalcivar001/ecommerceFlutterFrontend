@@ -1,16 +1,13 @@
-import 'package:ecommerce_flutter/src/data/dataSource/remote/services/AuthService.dart';
-import 'package:ecommerce_flutter/src/domain/models/AuthResponse.dart';
-import 'package:ecommerce_flutter/src/domain/useCases/auth/LoginUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/useCases/auth/AuthUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/auth/login/LoginBlocState.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
 class LoginBlocCubit extends Cubit<LoginBlocState> {
-  LoginBlocCubit() : super(LoginInitial());
+  AuthUseCases authUseCases;
+  LoginBlocCubit(this.authUseCases) : super(LoginInitial());
 
-  LoginUseCase loginUseCase =
-      LoginUseCase(); // Aquí puedes agregar métodos para manejar eventos y estados
   final _emailController = BehaviorSubject<String>();
   final _passwordController = BehaviorSubject<String>();
   final _responseController = BehaviorSubject<Resource>();
@@ -52,7 +49,7 @@ class LoginBlocCubit extends Cubit<LoginBlocState> {
 
   void login() async {
     _responseController.add(Loading());
-    Resource response = await loginUseCase.run(
+    Resource response = await authUseCases.login.run(
       _emailController.value,
       _passwordController.value,
     );
@@ -60,6 +57,5 @@ class LoginBlocCubit extends Cubit<LoginBlocState> {
     Future.delayed(Duration(seconds: 1), () {
       _responseController.add(Initial());
     });
-    print('response: $response');
   }
 }

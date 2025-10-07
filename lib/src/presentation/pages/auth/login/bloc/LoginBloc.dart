@@ -4,9 +4,9 @@ import 'package:ecommerce_flutter/src/presentation/pages/auth/login/LoginBlocSta
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
-class LoginBlocCubit extends Cubit<LoginBlocState> {
+class LoginBloc extends Cubit<LoginBlocState> {
   AuthUseCases authUseCases;
-  LoginBlocCubit(this.authUseCases) : super(LoginInitial());
+  LoginBloc(this.authUseCases) : super(LoginInitial());
 
   final _emailController = BehaviorSubject<String>();
   final _passwordController = BehaviorSubject<String>();

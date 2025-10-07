@@ -1,12 +1,65 @@
 import 'package:ecommerce_flutter/src/domain/useCases/auth/AuthUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/auth/login/LoginBlocState.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/auth/login/bloc/LoginEvent.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/auth/login/bloc/LoginState.dart';
+import 'package:ecommerce_flutter/src/presentation/utils/BlocFormItem.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
-class LoginBloc extends Cubit<LoginBlocState> {
+class LoginBloc extends Bloc<LoginEvent, LoginState> {
   AuthUseCases authUseCases;
-  LoginBloc(this.authUseCases) : super(LoginInitial());
+  LoginBloc(this.authUseCases) : super(LoginState()) {
+    on<InitEvent>(_onInitEvent);
+    on<EmailChanged>(_onEmailChanged);
+    on<PasswordChanged>(_onPasswordChanged);
+    on<LoginSubmitted>(_onLoginSubmitted);
+  }
+
+  final formKey = GlobalKey<FormState>();
+
+  Future<void> _onInitEvent(InitEvent event, Emitter<LoginState> emit) async {
+    emit(state.copyWith(formKey: formKey));
+  }
+
+  Future<void> _onEmailChanged(
+    EmailChanged event,
+    Emitter<LoginState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        email: BlocFormItem(value: event.email.value),
+        formKey: formKey,
+      ),
+    );
+  }
+
+  Future<void> _onPasswordChanged(
+    PasswordChanged event,
+    Emitter<LoginState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        password: BlocFormItem(value: event.password.value),
+        formKey: formKey,
+      ),
+    );
+  }
+
+  Future<void> _onLoginSubmitted(
+    LoginSubmitted event,
+    Emitter<LoginState> emit,
+  ) async {
+    _responseController.add(Loading());
+    Resource response = await authUseCases.login.run(
+      state.email.value,
+      state.password.value,
+    );
+    _responseController.add(response);
+    Future.delayed(Duration(seconds: 1), () {
+      _responseController.add(Initial());
+    });
+  }
 
   final _emailController = BehaviorSubject<String>();
   final _passwordController = BehaviorSubject<String>();
@@ -16,6 +69,13 @@ class LoginBloc extends Cubit<LoginBlocState> {
   Stream<String> get emailStream => _emailController.stream;
   Stream<String> get passwordStream => _passwordController.stream;
   Stream<Resource> get responseStream => _responseController.stream;
+
+  // si pasa las 2 validaciones entonces el formulario es valido
+  Stream<bool> get validateForm => Rx.combineLatest2(
+    _emailController.stream,
+    _passwordController.stream,
+    (a, b) => true,
+  );
 
   // Metodos para acceder a los valores actuales
   void changeEmail(String email) {
@@ -33,13 +93,6 @@ class LoginBloc extends Cubit<LoginBlocState> {
       _passwordController.sink.add(password);
     }
   }
-
-  // si pasa las 2 validaciones entonces el formulario es valido
-  Stream<bool> get validateForm => Rx.combineLatest2(
-    _emailController.stream,
-    _passwordController.stream,
-    (a, b) => true,
-  );
 
   //cuando pasamos a la siguiente pantalla
   void dispose() {

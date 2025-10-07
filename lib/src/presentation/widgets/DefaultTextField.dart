@@ -8,16 +8,17 @@ class DefaultTextfield extends StatelessWidget {
   bool isPassword = false;
 
   DefaultTextfield({
+    Key? key,
     required this.label,
     required this.icon,
     required this.onChanged,
     this.errorText,
     this.isPassword = false,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       obscureText: isPassword,
       onChanged: (text) {
         onChanged!(text);

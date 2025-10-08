@@ -18,7 +18,7 @@ class AuthService {
         AuthResponse authResponse = AuthResponse.fromJson(data);
         return Success(authResponse);
       } else {
-        return Error(data['message']);
+        return Error(listToString(data['message']));
       }
     } catch (e) {
       print('Error: $e');

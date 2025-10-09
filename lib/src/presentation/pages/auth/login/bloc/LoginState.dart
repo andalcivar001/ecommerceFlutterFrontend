@@ -26,7 +26,7 @@ class LoginState extends Equatable {
     return LoginState(
       email: email ?? this.email,
       password: password ?? this.password,
-      formKey: formKey ?? this.formKey,
+      formKey: formKey,
       response: response,
     );
   }

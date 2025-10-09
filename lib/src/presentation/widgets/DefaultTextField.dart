@@ -5,6 +5,7 @@ class DefaultTextfield extends StatelessWidget {
   String? errorText;
   IconData icon;
   Function(String text)? onChanged;
+  String? Function(String?)? validator;
   bool isPassword = false;
 
   DefaultTextfield({
@@ -13,6 +14,7 @@ class DefaultTextfield extends StatelessWidget {
     required this.icon,
     required this.onChanged,
     this.errorText,
+    this.validator,
     this.isPassword = false,
   }) : super(key: key);
 
@@ -23,6 +25,7 @@ class DefaultTextfield extends StatelessWidget {
       onChanged: (text) {
         onChanged!(text);
       },
+      validator: validator,
       decoration: InputDecoration(
         label: Text(label, style: TextStyle(color: Colors.white)),
         prefixIcon: Icon(icon, color: Colors.white),

@@ -4,7 +4,6 @@ import 'package:ecommerce_flutter/src/presentation/pages/auth/login/bloc/LoginSt
 import 'package:ecommerce_flutter/src/presentation/utils/BlocFormItem.dart';
 import 'package:ecommerce_flutter/src/presentation/widgets/DefaultTextField.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginContent extends StatelessWidget {
@@ -76,6 +75,9 @@ class LoginContent extends StatelessWidget {
                         EmailChanged(email: BlocFormItem(value: text)),
                       );
                     },
+                    validator: (value) {
+                      return _state.email.error;
+                    },
                   ),
                 ),
                 Container(
@@ -90,6 +92,9 @@ class LoginContent extends StatelessWidget {
                       );
                     },
                     isPassword: true,
+                    validator: (value) {
+                      return _state.password.error;
+                    },
                   ),
                 ),
                 Container(
@@ -103,19 +108,22 @@ class LoginContent extends StatelessWidget {
                   ),
                   child: ElevatedButton(
                     onPressed: () {
-                      _bloc?.add(LoginSubmitted());
+                      if (_state.formKey!.currentState!.validate()) {
+                        _bloc?.add(LoginSubmitted());
+                      } else {
+                        Fluttertoast.showToast(
+                          msg: 'Formulario inválido',
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+                      }
                       // if (snapshot.hasData) {
                       //   _bloc?.login();
                       // } else {
-                      //   Fluttertoast.showToast(
-                      //     msg: 'Formulario inválido',
-                      //     toastLength: Toast.LENGTH_SHORT,
-                      //     gravity: ToastGravity.BOTTOM,
-                      //     timeInSecForIosWeb: 1,
-                      //     backgroundColor: Colors.red,
-                      //     textColor: Colors.white,
-                      //     fontSize: 16.0,
-                      //   );
                       // }
                     },
                     style: ElevatedButton.styleFrom(

@@ -1,6 +1,7 @@
 import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/auth/login/LoginContent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/auth/login/bloc/LoginBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/auth/login/bloc/LoginEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/auth/login/bloc/LoginState.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,7 +27,6 @@ class _LoginPageState extends State<LoginPage> {
     // });
 
     // TODO: implement initState
-    super.initState();
   }
 
   @override
@@ -45,6 +45,7 @@ class _LoginPageState extends State<LoginPage> {
                 toastLength: Toast.LENGTH_LONG,
               );
             } else if (responseState is Success) {
+              _bloc?.add(LoginFormReset());
               Fluttertoast.showToast(
                 msg: 'Login Exitoso',
                 toastLength: Toast.LENGTH_LONG,

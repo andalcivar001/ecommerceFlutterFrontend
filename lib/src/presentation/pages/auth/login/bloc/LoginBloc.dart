@@ -15,6 +15,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<EmailChanged>(_onEmailChanged);
     on<PasswordChanged>(_onPasswordChanged);
     on<LoginSubmitted>(_onLoginSubmitted);
+    on<LoginFormReset>(_onLoginFormReset);
   }
 
   final formKey = GlobalKey<FormState>();
@@ -23,13 +24,23 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(state.copyWith(formKey: formKey));
   }
 
+  Future<void> _onLoginFormReset(
+    LoginFormReset event,
+    Emitter<LoginState> emit,
+  ) async {
+    state.formKey?.currentState?.reset();
+  }
+
   Future<void> _onEmailChanged(
     EmailChanged event,
     Emitter<LoginState> emit,
   ) async {
     emit(
       state.copyWith(
-        email: BlocFormItem(value: event.email.value),
+        email: BlocFormItem(
+          value: event.email.value,
+          error: event.email.value.isNotEmpty ? null : 'Ingresa un email',
+        ),
         formKey: formKey,
       ),
     );
@@ -41,7 +52,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async {
     emit(
       state.copyWith(
-        password: BlocFormItem(value: event.password.value),
+        password: BlocFormItem(
+          value: event.password.value,
+          error:
+              event.password.value.isNotEmpty &&
+                      event.password.value.length >= 4
+                  ? null
+                  : 'Ingrese Contraseña',
+        ),
         formKey: formKey,
       ),
     );

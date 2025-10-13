@@ -16,6 +16,7 @@ class Authrepositoryimpl implements Authrepository {
 
   @override
   Future<Resource<AuthResponse>> register(User user) {
+    print('Authrepositoryimpl - register: $user');
     return authService.register(user);
   }
 }

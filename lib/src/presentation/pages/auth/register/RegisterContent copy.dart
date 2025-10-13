@@ -8,11 +8,11 @@ import 'package:ecommerce_flutter/src/presentation/widgets/DefaultIconBack.dart'
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class RegisterContent extends StatelessWidget {
+class RegisterContentCopy extends StatelessWidget {
   RegisterBloc? bloc;
   RegisterState state;
 
-  RegisterContent(this.bloc, this.state);
+  RegisterContentCopy(this.bloc, this.state);
 
   @override
   Widget build(BuildContext context) {

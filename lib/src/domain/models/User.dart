@@ -23,15 +23,20 @@ class User {
     this.roles,
   });
 
+  @override
+  String toString() {
+    return 'User{id: $id, name: $name, lastName: $lastName, email: $email, phone: $phone, password: $password, image: $image, notificationToken: $notificationToken)}}';
+  }
+
   factory User.fromJson(Map<String, dynamic> json) => User(
     id: json["id"] ?? 0,
     name: json["name"],
     lastName: json["lastName"],
     email: json["email"],
     phone: json["phone"],
+    image: json["image"],
     password: json["password"] ?? '',
-    image: json["image"] ?? '',
-    notificationToken: json["notificationToken"] ?? '',
+    notificationToken: json["notification_token"] ?? '',
     roles:
         json["roles"] != null
             ? List<Role>.from(json["roles"].map((x) => Role.fromJson(x)))
@@ -44,9 +49,9 @@ class User {
     "lastName": lastName,
     "email": email,
     "phone": phone,
-    "password": password,
     "image": image,
-    "notificationToken": notificationToken,
+    "password": password,
+    "notification_token": notificationToken,
     "roles":
         roles != null ? List<dynamic>.from(roles!.map((x) => x.toJson())) : [],
   };

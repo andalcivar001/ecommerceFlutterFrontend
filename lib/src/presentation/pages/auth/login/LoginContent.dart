@@ -66,7 +66,7 @@ class LoginContent extends StatelessWidget {
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 25, right: 25),
-                  child: DefaultTextfield(
+                  child: DefaultTextField(
                     label: 'Correo electrónico',
                     icon: Icons.email,
                     //   errorText: snapshot.error?.toString(),
@@ -82,7 +82,7 @@ class LoginContent extends StatelessWidget {
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 25, right: 25),
-                  child: DefaultTextfield(
+                  child: DefaultTextField(
                     label: 'Contraseña',
                     icon: Icons.lock,
                     // errorText: snapshot.error?.toString(),

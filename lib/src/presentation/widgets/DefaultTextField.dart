@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DefaultTextfield extends StatelessWidget {
+class DefaultTextField extends StatelessWidget {
   String label;
   String? errorText;
   IconData icon;
@@ -8,7 +8,7 @@ class DefaultTextfield extends StatelessWidget {
   String? Function(String?)? validator;
   bool isPassword = false;
 
-  DefaultTextfield({
+  DefaultTextField({
     Key? key,
     required this.label,
     required this.icon,

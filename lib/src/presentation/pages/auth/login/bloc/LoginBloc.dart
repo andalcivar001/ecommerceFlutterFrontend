@@ -70,6 +70,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Emitter<LoginState> emit,
   ) async {
     emit(state.copyWith(response: Loading(), formKey: formKey));
+    await Future.delayed(Duration(seconds: 3));
     Resource<AuthResponse> response = await authUseCases.login.run(
       state.email.value,
       state.password.value,

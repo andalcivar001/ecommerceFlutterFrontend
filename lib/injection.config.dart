@@ -28,7 +28,7 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final appmodule = _$Appmodule();
     gh.factory<_i543.AuthService>(() => appmodule.authService);
-    gh.factory<_i148.Authrepository>(() => appmodule.authrepository);
+    gh.factory<_i148.AuthRepository>(() => appmodule.authrepository);
     gh.factory<_i322.AuthUseCases>(() => appmodule.authuseCases);
     return this;
   }

@@ -16,3 +16,4 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 shared_preferences para guardar en base local
+se ejecuta este comando cada que se hacen cambios en el appModule... flutter packages pub run build_runner build

@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPref {
   Future<void> save(String key, dynamic value) async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString(key, value); // Guarda como String usuario
+    prefs.setString(key, json.encode(value)); // Guarda como String usuario
   }
 
   Future<dynamic> read(String key) async {

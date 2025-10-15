@@ -23,11 +23,14 @@ class Authrepositoryimpl implements AuthRepository {
   }
 
   @override
-  Future<AuthResponse> getUserSession() async {
-    AuthResponse authResponse = AuthResponse.fromJson(
-      await sharedPref.read('user'),
-    );
-    return authResponse;
+  Future<AuthResponse?> getUserSession() async {
+    final data = await sharedPref.read('user');
+    if (data != null) {
+      AuthResponse authResponse = AuthResponse.fromJson(data);
+      return authResponse;
+    } else {
+      return null;
+    }
   }
 
   @override

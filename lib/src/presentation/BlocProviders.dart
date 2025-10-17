@@ -4,6 +4,8 @@ import 'package:ecommerce_flutter/src/presentation/pages/auth/login/bloc/LoginBl
 import 'package:ecommerce_flutter/src/presentation/pages/auth/login/bloc/LoginEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/auth/register/bloc/RegisterBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/auth/register/bloc/RegisterEvent.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/roles/bloc/RolesBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/roles/bloc/RolesEvent.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 List<BlocProvider> blocProviders = [
@@ -14,5 +16,9 @@ List<BlocProvider> blocProviders = [
     create:
         (context) =>
             RegisterBloc(locator<AuthUseCases>())..add(RegisterInitEvent()),
+  ),
+  BlocProvider<RolesBloc>(
+    create:
+        (context) => RolesBloc(locator<AuthUseCases>())..add(GetRolesList()),
   ),
 ];

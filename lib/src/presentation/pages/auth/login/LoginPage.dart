@@ -51,7 +51,11 @@ class _LoginPageState extends State<LoginPage> {
               _bloc?.add(LoginSaveUserSession(authResponse: authResponse));
 
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                Navigator.pushNamed(context, 'roles');
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  'roles',
+                  (route) => false,
+                ); // cambia de pantalla pero elimina la pantalla anterior
               });
             }
           },

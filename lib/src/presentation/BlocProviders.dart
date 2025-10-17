@@ -1,5 +1,6 @@
 import 'package:ecommerce_flutter/injection.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/auth/AuthUseCases.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/home/bloc/AdminHomeBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/auth/login/bloc/LoginBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/auth/login/bloc/LoginEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/auth/register/bloc/RegisterBloc.dart';
@@ -21,4 +22,5 @@ List<BlocProvider> blocProviders = [
     create:
         (context) => RolesBloc(locator<AuthUseCases>())..add(GetRolesList()),
   ),
+  BlocProvider<AdminHomeBloc>(create: (context) => AdminHomeBloc()),
 ];

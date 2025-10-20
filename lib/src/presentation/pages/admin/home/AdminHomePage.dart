@@ -24,6 +24,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
   Widget build(BuildContext context) {
     _bloc = BlocProvider.of<AdminHomeBloc>(context);
     return Scaffold(
+      appBar: AppBar(title: Text('Menu')),
       drawer: BlocBuilder<AdminHomeBloc, AdminHomeState>(
         builder: (context, state) {
           return Drawer(
@@ -31,8 +32,11 @@ class _AdminHomePageState extends State<AdminHomePage> {
               padding: EdgeInsets.zero,
               children: [
                 DrawerHeader(
-                  child: Text('Menu de Administrador'),
-                  decoration: BoxDecoration(color: Colors.black),
+                  child: Text(
+                    'Menu de Administrador',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  decoration: BoxDecoration(color: Colors.blueAccent),
                 ),
                 ListTile(
                   title: Text('Categorias'),
@@ -48,6 +52,17 @@ class _AdminHomePageState extends State<AdminHomePage> {
                   onTap: () {
                     _bloc?.add(AdminChangeDrawerPage(pageIndex: 1));
                     Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  title: Text('Cerrar sesión'),
+                  onTap: () {
+                    _bloc?.add(AdminLogout());
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      'login',
+                      (route) => false,
+                    );
                   },
                 ),
               ],

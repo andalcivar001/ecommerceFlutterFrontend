@@ -14,3 +14,7 @@ class AdminChangeDrawerPage extends AdminHomeEvent {
   @override
   List<Object?> get props => [pageIndex]; // aqui van las variables que van a cambiar
 }
+
+class AdminLogout extends AdminHomeEvent {
+  const AdminLogout();
+}

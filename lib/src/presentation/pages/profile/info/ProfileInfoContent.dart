@@ -1,7 +1,10 @@
+import 'package:ecommerce_flutter/src/domain/models/User.dart';
 import 'package:flutter/material.dart';
 
 class ProfileInfoContent extends StatelessWidget {
-  const ProfileInfoContent({super.key});
+  User? user;
+
+  ProfileInfoContent(this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +28,37 @@ class ProfileInfoContent extends StatelessWidget {
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(35),
           topRight: Radius.circular(35),
+        ),
+      ),
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 15),
+        child: Column(
+          children: [
+            ListTile(
+              title: Text('${user?.name ?? ''} ${user?.lastName ?? ''}  '),
+              subtitle: Text('Nombre de usuario'),
+              leading: Icon(Icons.person),
+            ),
+            ListTile(
+              title: Text(user?.email ?? ''),
+              subtitle: Text('Corre electronico'),
+              leading: Icon(Icons.email),
+            ),
+            ListTile(
+              title: Text(user?.phone ?? ''),
+              subtitle: Text('Teléfono'),
+              leading: Icon(Icons.phone),
+            ),
+            Container(
+              alignment: Alignment.centerRight,
+              margin: EdgeInsets.only(right: 10, bottom: 10),
+              child: FloatingActionButton(
+                backgroundColor: Colors.black,
+                onPressed: () {},
+                child: Icon(Icons.edit, color: Colors.white),
+              ),
+            ),
+          ],
         ),
       ),
     );

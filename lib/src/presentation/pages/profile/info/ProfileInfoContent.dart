@@ -54,7 +54,9 @@ class ProfileInfoContent extends StatelessWidget {
               margin: EdgeInsets.only(right: 10, bottom: 10),
               child: FloatingActionButton(
                 backgroundColor: Colors.black,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, 'profile/update');
+                },
                 child: Icon(Icons.edit, color: Colors.white),
               ),
             ),

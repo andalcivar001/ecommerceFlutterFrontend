@@ -7,6 +7,8 @@ import 'package:ecommerce_flutter/src/presentation/pages/auth/register/bloc/Regi
 import 'package:ecommerce_flutter/src/presentation/pages/auth/register/bloc/RegisterEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/profile/info/bloc/ProfileInfoBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/profile/info/bloc/ProfileInfoEvent.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/profile/update/bloc/ProfileUpdateBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/profile/update/bloc/ProfileUpdateEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/roles/bloc/RolesBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/roles/bloc/RolesEvent.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,5 +33,8 @@ List<BlocProvider> blocProviders = [
     create:
         (context) =>
             ProfileInfoBloc(locator<AuthUseCases>())..add(ProfileInfoGetUser()),
+  ),
+  BlocProvider<ProfileUpdateBloc>(
+    create: (context) => ProfileUpdateBloc()..add(ProfileUpdateInitEvent()),
   ),
 ];

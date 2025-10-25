@@ -1,12 +1,18 @@
 import 'package:ecommerce_flutter/src/domain/models/User.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/profile/update/bloc/ProfileUpdateBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/profile/update/bloc/ProfileUpdateEvent.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/profile/update/bloc/ProfileUpdateState.dart';
+import 'package:ecommerce_flutter/src/presentation/utils/BlocFormItem.dart';
 import 'package:ecommerce_flutter/src/presentation/widgets/DefaultIconBack.dart';
 import 'package:ecommerce_flutter/src/presentation/widgets/DefaultTextField.dart';
 import 'package:flutter/material.dart';
 
 class ProfileUpdateContent extends StatelessWidget {
+  ProfileUpdateBloc? bloc;
+  ProfileUpdateState state;
   User? user;
 
-  ProfileUpdateContent(this.user);
+  ProfileUpdateContent(this.bloc, this.state, this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -73,11 +79,11 @@ class ProfileUpdateContent extends StatelessWidget {
         icon: Icons.person,
         //   errorText: snapshot.error?.toString(),
         onChanged: (text) {
-          //_bloc?.add(EmailChanged(email: BlocFormItem(value: text)));
+          bloc?.add(ProfileUpdateNameChanged(name: BlocFormItem(value: text)));
         },
-        // validator: (value) {
-        //   return _state.email.error;
-        // },
+        validator: (value) {
+          return state.name.error;
+        },
       ),
     );
   }
@@ -90,11 +96,13 @@ class ProfileUpdateContent extends StatelessWidget {
         icon: Icons.person_outline,
         //   errorText: snapshot.error?.toString(),
         onChanged: (text) {
-          //_bloc?.add(EmailChanged(email: BlocFormItem(value: text)));
+          bloc?.add(
+            ProfileUpdateLastNameChanged(lastName: BlocFormItem(value: text)),
+          );
         },
-        // validator: (value) {
-        //   return _state.email.error;
-        // },
+        validator: (value) {
+          return state.lastName.error;
+        },
       ),
     );
   }
@@ -107,11 +115,13 @@ class ProfileUpdateContent extends StatelessWidget {
         icon: Icons.phone,
         //   errorText: snapshot.error?.toString(),
         onChanged: (text) {
-          //_bloc?.add(EmailChanged(email: BlocFormItem(value: text)));
+          bloc?.add(
+            ProfileUpdatePhoneChanged(phone: BlocFormItem(value: text)),
+          );
         },
-        // validator: (value) {
-        //   return _state.email.error;
-        // },
+        validator: (value) {
+          return state.phone.error;
+        },
       ),
     );
   }

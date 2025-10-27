@@ -1,23 +1,75 @@
+import 'dart:io';
+
+import 'package:ecommerce_flutter/src/domain/useCases/users/UsersUseCases.dart';
+import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/profile/update/bloc/ProfileUpdateEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/profile/update/bloc/ProfileUpdateState.dart';
 import 'package:ecommerce_flutter/src/presentation/utils/BlocFormItem.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileUpdateBloc extends Bloc<ProfileUpdateEvent, ProfileUpdateState> {
+  UsersUseCases usersUseCases;
+
   final formKey = GlobalKey<FormState>();
-  ProfileUpdateBloc() : super(ProfileUpdateState()) {
+  ProfileUpdateBloc(this.usersUseCases) : super(ProfileUpdateState()) {
     on<ProfileUpdateInitEvent>(_onInitEvent);
     on<ProfileUpdateNameChanged>(_onNameChanged);
     on<ProfileUpdateLastNameChanged>(_onLastNameChanged);
     on<ProfileUpdatePhoneChanged>(_onPhoneChanged);
+    on<ProfileUpdatePickImage>(_onPickImage);
+    on<ProfileUpdateTakePhoto>(_onTakePhoto);
+    on<ProfileUpdateFormSubmit>(_onFormSubmit);
+  }
+
+  Future<void> _onFormSubmit(
+    ProfileUpdateFormSubmit event,
+    Emitter<ProfileUpdateState> emit,
+  ) async {
+    emit(state.copyWith(response: Loading(), formKey: formKey));
+    Resource response = await usersUseCases.updateUser.run(
+      state.id,
+      state.toUser(),
+      state.image,
+    );
+  }
+
+  Future<void> _onPickImage(
+    ProfileUpdatePickImage event,
+    Emitter<ProfileUpdateState> emit,
+  ) async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      emit(state.copyWith(image: File(image.path)));
+    }
+  }
+
+  Future<void> _onTakePhoto(
+    ProfileUpdateTakePhoto event,
+    Emitter<ProfileUpdateState> emit,
+  ) async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.camera);
+    if (image != null) {
+      emit(state.copyWith(image: File(image.path)));
+    }
   }
 
   Future<void> _onInitEvent(
     ProfileUpdateInitEvent event,
     Emitter<ProfileUpdateState> emit,
   ) async {
-    emit(state.copyWith(formKey: formKey));
+    emit(
+      state.copyWith(
+        id: event.user?.id,
+        name: BlocFormItem(value: event.user?.name ?? ''),
+        lastName: BlocFormItem(value: event.user?.lastName ?? ''),
+        phone: BlocFormItem(value: event.user?.phone ?? ''),
+        formKey: formKey,
+      ),
+    );
   }
 
   Future<void> _onNameChanged(

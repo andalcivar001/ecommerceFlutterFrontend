@@ -3,6 +3,7 @@ import 'package:ecommerce_flutter/src/presentation/pages/profile/update/bloc/Pro
 import 'package:ecommerce_flutter/src/presentation/pages/profile/update/bloc/ProfileUpdateEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/profile/update/bloc/ProfileUpdateState.dart';
 import 'package:ecommerce_flutter/src/presentation/utils/BlocFormItem.dart';
+import 'package:ecommerce_flutter/src/presentation/utils/SelectOptionImageDialog.dart';
 import 'package:ecommerce_flutter/src/presentation/widgets/DefaultIconBack.dart';
 import 'package:ecommerce_flutter/src/presentation/widgets/DefaultTextField.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class ProfileUpdateContent extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _imageProfile(),
+                _imageProfile(context),
                 // Spacer(),
                 _cardProfileInfo(context),
               ],
@@ -40,7 +41,7 @@ class ProfileUpdateContent extends StatelessWidget {
 
   Widget _cardProfileInfo(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.35,
+      height: MediaQuery.of(context).size.height * 0.40,
       width: double.infinity,
       decoration: BoxDecoration(
         color: Color.fromRGBO(255, 255, 255, 0.7),
@@ -53,21 +54,34 @@ class ProfileUpdateContent extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 15),
         child: Column(
           children: [
+            _textUpdateInfo(),
             _textFieldName(),
             _textFieldLastName(),
             _textFieldPhone(),
-            Container(
-              alignment: Alignment.centerRight,
-              margin: EdgeInsets.only(right: 10, top: 20),
-              child: FloatingActionButton(
-                backgroundColor: Colors.black,
-                onPressed: () {},
-                child: Icon(Icons.check, color: Colors.white),
-              ),
-            ),
+            _fabSubmit(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _fabSubmit() {
+    return Container(
+      alignment: Alignment.centerRight,
+      margin: EdgeInsets.only(right: 10, top: 20),
+      child: FloatingActionButton(
+        backgroundColor: Colors.black,
+        onPressed: () {},
+        child: Icon(Icons.check, color: Colors.white),
+      ),
+    );
+  }
+
+  Widget _textUpdateInfo() {
+    return Container(
+      alignment: Alignment.centerLeft,
+      margin: EdgeInsets.only(top: 25, left: 35, bottom: 10),
+      child: Text('Actualizar información', style: TextStyle(fontSize: 17)),
     );
   }
 
@@ -76,8 +90,9 @@ class ProfileUpdateContent extends StatelessWidget {
       margin: EdgeInsets.only(left: 25, right: 25),
       child: DefaultTextField(
         label: 'Nombre',
+        initialValue: user?.name ?? '',
         icon: Icons.person,
-        //   errorText: snapshot.error?.toString(),
+        color: Colors.black,
         onChanged: (text) {
           bloc?.add(ProfileUpdateNameChanged(name: BlocFormItem(value: text)));
         },
@@ -94,7 +109,8 @@ class ProfileUpdateContent extends StatelessWidget {
       child: DefaultTextField(
         label: 'Apellido',
         icon: Icons.person_outline,
-        //   errorText: snapshot.error?.toString(),
+        initialValue: user?.lastName ?? '',
+        color: Colors.black,
         onChanged: (text) {
           bloc?.add(
             ProfileUpdateLastNameChanged(lastName: BlocFormItem(value: text)),
@@ -113,7 +129,9 @@ class ProfileUpdateContent extends StatelessWidget {
       child: DefaultTextField(
         label: 'Teléfono',
         icon: Icons.phone,
-        //   errorText: snapshot.error?.toString(),
+        color: Colors.black,
+        initialValue: user?.phone ?? '',
+
         onChanged: (text) {
           bloc?.add(
             ProfileUpdatePhoneChanged(phone: BlocFormItem(value: text)),
@@ -126,21 +144,37 @@ class ProfileUpdateContent extends StatelessWidget {
     );
   }
 
-  Widget _imageProfile() {
-    return Container(
-      margin: EdgeInsets.only(top: 100),
-      width: 150,
-      child: AspectRatio(
-        aspectRatio: 1 / 1,
+  Widget _imageProfile(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        SelectOpctionImageDialog(
+          context,
+          () {
+            bloc?.add(ProfileUpdatePickImage());
+          },
+          () {
+            bloc?.add(ProfileUpdateTakePhoto());
+          },
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.only(top: 100),
+        width: 150,
+        child: AspectRatio(
+          aspectRatio: 1 / 1,
 
-        child: ClipOval(
-          child: FadeInImage.assetNetwork(
-            placeholder: 'assets/img/user.png',
-            image:
-                'https://www.jeancoutu.com/globalassets/revamp/photo/conseils-photo/20160302-01-reseaux-sociaux-profil/photo-profil_301783868.jpg',
+          child: ClipOval(
+            child:
+                state.image != null
+                    ? Image.file(state.image!, fit: BoxFit.cover)
+                    : FadeInImage.assetNetwork(
+                      placeholder: 'assets/img/user.png',
+                      image:
+                          'https://www.jeancoutu.com/globalassets/revamp/photo/conseils-photo/20160302-01-reseaux-sociaux-profil/photo-profil_301783868.jpg',
 
-            fit: BoxFit.cover,
-            fadeInDuration: Duration(seconds: 1),
+                      fit: BoxFit.cover,
+                      fadeInDuration: Duration(seconds: 1),
+                    ),
           ),
         ),
       ),

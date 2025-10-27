@@ -7,7 +7,8 @@ class DefaultTextField extends StatelessWidget {
   Function(String text)? onChanged;
   String? Function(String?)? validator;
   bool isPassword = false;
-
+  String? initialValue;
+  Color? color;
   DefaultTextField({
     Key? key,
     required this.label,
@@ -16,28 +17,31 @@ class DefaultTextField extends StatelessWidget {
     this.errorText,
     this.validator,
     this.isPassword = false,
+    this.initialValue,
+    this.color = Colors.white,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: isPassword,
+      initialValue: initialValue,
       onChanged: (text) {
         onChanged!(text);
       },
       validator: validator,
       decoration: InputDecoration(
-        label: Text(label, style: TextStyle(color: Colors.white)),
-        prefixIcon: Icon(icon, color: Colors.white),
+        label: Text(label, style: TextStyle(color: color)),
+        prefixIcon: Icon(icon, color: color),
         errorText: errorText,
         enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
+          borderSide: BorderSide(color: color!),
         ),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
+          borderSide: BorderSide(color: color!),
         ),
       ),
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(color: color),
     );
   }
 }

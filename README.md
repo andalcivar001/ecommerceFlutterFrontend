@@ -17,3 +17,7 @@ samples, guidance on mobile development, and a full API reference.
 
 shared_preferences para guardar en base local
 se ejecuta este comando cada que se hacen cambios en el appModule... flutter packages pub run build_runner build
+
+se instala la extension Bloc por Felix Angelov
+
+path: ^1.9.1 ... libreria para trabajar directamente con archivos

@@ -1,3 +1,4 @@
+import 'package:ecommerce_flutter/src/domain/models/User.dart';
 import 'package:ecommerce_flutter/src/presentation/utils/BlocFormItem.dart';
 import 'package:equatable/equatable.dart';
 
@@ -9,7 +10,11 @@ abstract class ProfileUpdateEvent extends Equatable {
 }
 
 class ProfileUpdateInitEvent extends ProfileUpdateEvent {
-  const ProfileUpdateInitEvent();
+  final User? user;
+  const ProfileUpdateInitEvent({required this.user});
+
+  @override
+  List<Object?> get props => [user];
 }
 
 class ProfileUpdateNameChanged extends ProfileUpdateEvent {
@@ -35,4 +40,12 @@ class ProfileUpdatePhoneChanged extends ProfileUpdateEvent {
 
 class ProfileUpdateFormSubmit extends ProfileUpdateEvent {
   const ProfileUpdateFormSubmit();
+}
+
+class ProfileUpdatePickImage extends ProfileUpdateEvent {
+  const ProfileUpdatePickImage();
+}
+
+class ProfileUpdateTakePhoto extends ProfileUpdateEvent {
+  const ProfileUpdateTakePhoto();
 }

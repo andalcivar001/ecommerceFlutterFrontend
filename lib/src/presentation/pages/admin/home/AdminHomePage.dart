@@ -1,3 +1,4 @@
+import 'package:ecommerce_flutter/main.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/category/list/AdminCategoryListPage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/home/bloc/AdminHomeBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/home/bloc/AdminHomeEvent.dart';
@@ -68,9 +69,10 @@ class _AdminHomePageState extends State<AdminHomePage> {
                   title: Text('Cerrar sesión'),
                   onTap: () {
                     _bloc?.add(AdminLogout());
-                    Navigator.pushNamedAndRemoveUntil(
+                    // pushNamedAndRemoveUntil con este comando eliminar el historial de pantallas anteriores
+                    Navigator.pushAndRemoveUntil(
                       context,
-                      'login',
+                      MaterialPageRoute(builder: (context) => MyApp()),
                       (route) => false,
                     );
                   },

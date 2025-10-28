@@ -49,3 +49,11 @@ class ProfileUpdatePickImage extends ProfileUpdateEvent {
 class ProfileUpdateTakePhoto extends ProfileUpdateEvent {
   const ProfileUpdateTakePhoto();
 }
+
+class ProfileUpdateUpdateUserSession extends ProfileUpdateEvent {
+  final User user;
+  ProfileUpdateUpdateUserSession({required this.user});
+
+  @override
+  List<Object?> get props => [user];
+}

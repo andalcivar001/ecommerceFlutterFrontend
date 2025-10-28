@@ -78,14 +78,15 @@ class ProfileInfoContent extends StatelessWidget {
         aspectRatio: 1 / 1,
 
         child: ClipOval(
-          child: FadeInImage.assetNetwork(
-            placeholder: 'assets/img/user.png',
-            image:
-                'https://www.jeancoutu.com/globalassets/revamp/photo/conseils-photo/20160302-01-reseaux-sociaux-profil/photo-profil_301783868.jpg',
-
-            fit: BoxFit.cover,
-            fadeInDuration: Duration(seconds: 1),
-          ),
+          child:
+              user != null
+                  ? FadeInImage.assetNetwork(
+                    placeholder: 'assets/img/user_image.png',
+                    image: user!.image!,
+                    fit: BoxFit.cover,
+                    fadeInDuration: Duration(seconds: 1),
+                  )
+                  : Container(),
         ),
       ),
     );

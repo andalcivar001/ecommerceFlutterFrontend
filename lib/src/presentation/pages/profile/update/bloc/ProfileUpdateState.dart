@@ -46,7 +46,7 @@ class ProfileUpdateState extends Equatable {
       name: name ?? this.name,
       lastName: lastName ?? this.lastName,
       phone: phone ?? this.phone,
-      image: image,
+      image: image ?? this.image,
       formKey: formKey,
       response: response,
     );

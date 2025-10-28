@@ -17,25 +17,28 @@ class ProfileUpdateContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        _imageBackground(context),
-        SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _imageProfile(context),
-                // Spacer(),
-                _cardProfileInfo(context),
-              ],
+    return Form(
+      key: state.formKey,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          _imageBackground(context),
+          SingleChildScrollView(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _imageProfile(context),
+                  // Spacer(),
+                  _cardProfileInfo(context),
+                ],
+              ),
             ),
           ),
-        ),
-        DefaultIconBack(marginLeft: 15, marginTop: 50),
-      ],
+          DefaultIconBack(marginLeft: 15, marginTop: 50),
+        ],
+      ),
     );
   }
 
@@ -71,7 +74,9 @@ class ProfileUpdateContent extends StatelessWidget {
       margin: EdgeInsets.only(right: 10, top: 20),
       child: FloatingActionButton(
         backgroundColor: Colors.black,
-        onPressed: () {},
+        onPressed: () {
+          bloc?.add(ProfileUpdateFormSubmit());
+        },
         child: Icon(Icons.check, color: Colors.white),
       ),
     );

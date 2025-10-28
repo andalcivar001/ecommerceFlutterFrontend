@@ -24,7 +24,7 @@ abstract class Appmodule {
   SharedPref get sharedPref => SharedPref();
 
   @injectable
-  UserService get userService => UserService();
+  UserService get userService => UserService(sharedPref);
 
   @injectable
   AuthRepository get authrepository =>

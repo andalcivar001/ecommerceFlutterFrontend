@@ -33,6 +33,7 @@ class ProfileUpdateBloc extends Bloc<ProfileUpdateEvent, ProfileUpdateState> {
       state.toUser(),
       state.image,
     );
+    emit(state.copyWith(response: response, formKey: formKey));
   }
 
   Future<void> _onPickImage(

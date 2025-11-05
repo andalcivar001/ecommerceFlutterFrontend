@@ -60,7 +60,7 @@ class ProfileUpdateBloc extends Bloc<ProfileUpdateEvent, ProfileUpdateState> {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-      emit(state.copyWith(image: File(image.path)));
+      emit(state.copyWith(image: File(image.path), formKey: formKey));
     }
   }
 
@@ -71,7 +71,7 @@ class ProfileUpdateBloc extends Bloc<ProfileUpdateEvent, ProfileUpdateState> {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.camera);
     if (image != null) {
-      emit(state.copyWith(image: File(image.path)));
+      emit(state.copyWith(image: File(image.path), formKey: formKey));
     }
   }
 

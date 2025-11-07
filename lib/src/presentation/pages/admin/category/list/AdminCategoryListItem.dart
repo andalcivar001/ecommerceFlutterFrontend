@@ -1,9 +1,12 @@
 import 'package:ecommerce_flutter/src/domain/models/Category.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/category/list/bloc/AdminCategoryListBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/category/list/bloc/AdminCategoryListEvent.dart';
 import 'package:flutter/material.dart';
 
 class AdminCategoryListItem extends StatelessWidget {
+  AdminCategoryListBloc? bloc;
   Category? category;
-  AdminCategoryListItem(this.category);
+  AdminCategoryListItem(this.bloc, this.category);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +40,12 @@ class AdminCategoryListItem extends StatelessWidget {
             },
             icon: Icon(Icons.edit),
           ),
-          IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
+          IconButton(
+            onPressed: () {
+              bloc?.add(AdminCategoryListDeleteCategory(id: category!.id!));
+            },
+            icon: Icon(Icons.delete),
+          ),
         ],
       ),
     );

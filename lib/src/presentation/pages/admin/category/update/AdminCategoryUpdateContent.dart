@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 class AdminCategoryUpdateContent extends StatelessWidget {
   AdminCategoryUpdateBloc? bloc;
   AdminCategoryUpdateState state;
-  Category category;
+  Category? category;
 
   AdminCategoryUpdateContent(this.bloc, this.state, this.category);
 
@@ -91,14 +91,14 @@ class AdminCategoryUpdateContent extends StatelessWidget {
     return DefaultTextField(
       label: 'Nombre de la categoria',
       icon: Icons.category,
-      initialValue: category.name,
+      initialValue: category?.name ?? '',
       onChanged: (text) {
         bloc?.add(
           AdminCategoryUpdateNameChanged(name: BlocFormItem(value: text)),
         );
       },
       validator: (value) {
-        state.name.error;
+        return state.name.error;
       },
       color: Colors.black,
     );
@@ -108,7 +108,7 @@ class AdminCategoryUpdateContent extends StatelessWidget {
     return DefaultTextField(
       label: 'Nombre de la descripcion',
       icon: Icons.list,
-      initialValue: category.description,
+      initialValue: category?.description ?? '',
       onChanged: (text) {
         bloc?.add(
           AdminCategoryUpdateDescriptionChanged(
@@ -117,7 +117,7 @@ class AdminCategoryUpdateContent extends StatelessWidget {
         );
       },
       validator: (value) {
-        state.description.error;
+        return state.description.error;
       },
       color: Colors.black,
     );

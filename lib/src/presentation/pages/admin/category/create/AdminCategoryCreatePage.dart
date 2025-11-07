@@ -3,6 +3,8 @@ import 'package:ecommerce_flutter/src/presentation/pages/admin/category/create/A
 import 'package:ecommerce_flutter/src/presentation/pages/admin/category/create/bloc/AdminCategoryCreateBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/category/create/bloc/AdminCategoryCreateEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/category/create/bloc/AdminCategoryCreateState.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/category/list/bloc/AdminCategoryListBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/category/list/bloc/AdminCategoryListEvent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -27,7 +29,11 @@ class _AdminCategoryCreatePageState extends State<AdminCategoryCreatePage> {
         listener: (context, state) {
           final responseState = state.response;
           if (responseState is Success) {
+            context.read<AdminCategoryListBloc>().add(
+              AdminCategoryListGetCategory(),
+            );
             _bloc?.add(AdminCategoryCreateResetForm());
+
             Fluttertoast.showToast(
               msg: 'La categoria fue creada correctamente',
               toastLength: Toast.LENGTH_LONG,

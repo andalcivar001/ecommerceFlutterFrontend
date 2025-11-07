@@ -11,6 +11,7 @@ class AdminCategoryListBloc
   AdminCategoryListBloc(this.categoryUseCase)
     : super(AdminCategoryListState()) {
     on<AdminCategoryListGetCategory>(_onGetCatogory);
+    on<AdminCategoryListDeleteCategory>(_onDeleteCatogory);
   }
 
   Future<void> _onGetCatogory(
@@ -19,6 +20,15 @@ class AdminCategoryListBloc
   ) async {
     emit(state.copyWith(response: Loading()));
     Resource response = await categoryUseCase.getCategory.run();
+    emit(state.copyWith(response: response));
+  }
+
+  Future<void> _onDeleteCatogory(
+    AdminCategoryListDeleteCategory event,
+    Emitter<AdminCategoryListState> emit,
+  ) async {
+    emit(state.copyWith(response: Loading()));
+    Resource response = await categoryUseCase.delete.run(event.id);
     emit(state.copyWith(response: response));
   }
 }

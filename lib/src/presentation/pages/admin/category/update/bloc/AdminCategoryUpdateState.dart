@@ -25,6 +25,10 @@ class AdminCategoryUpdateState extends Equatable {
 
   toCategory() => Category(name: name.value, description: description.value);
 
+  AdminCategoryUpdateState resetForm() {
+    return AdminCategoryUpdateState(image: null);
+  }
+
   AdminCategoryUpdateState copyWith({
     int? id,
     BlocFormItem? name,

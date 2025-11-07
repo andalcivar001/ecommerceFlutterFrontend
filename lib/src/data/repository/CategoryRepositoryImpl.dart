@@ -21,7 +21,16 @@ class CategoryRepositoryImpl extends CategoryRepository {
   }
 
   @override
-  Future<Resource<Category>> update(int id, Category category, File file) {
-    return categoryService.update(id, category, file);
+  Future<Resource<Category>> update(int id, Category category, File? file) {
+    if (file == null) {
+      return categoryService.update(id, category);
+    } else {
+      return categoryService.updateImage(id, category, file);
+    }
+  }
+
+  @override
+  Future<Resource<bool>> delete(int id) {
+    return categoryService.delet(id);
   }
 }

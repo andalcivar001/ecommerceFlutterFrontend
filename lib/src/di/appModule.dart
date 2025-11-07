@@ -16,7 +16,9 @@ import 'package:ecommerce_flutter/src/domain/useCases/auth/RegisterUseCase.dart'
 import 'package:ecommerce_flutter/src/domain/useCases/auth/SaveUSerSessionUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/category/CategoryUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/category/CreateCategoryUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/useCases/category/DeleteCategoryUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/category/GetCategoryUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/useCases/category/UpdateCategoryUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/users/UpdateUserUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/users/UsersUseCases.dart';
 import 'package:injectable/injectable.dart';
@@ -63,5 +65,7 @@ abstract class Appmodule {
   CategoryUseCases get categoryUseCases => CategoryUseCases(
     create: CreateCategoryUseCase(categoryRepository),
     getCategory: GetCategoryUseCase(categoryRepository),
+    update: UpdateCategoryUseCase(categoryRepository),
+    delete: DeleteCategoryUseCase(categoryRepository),
   );
 }

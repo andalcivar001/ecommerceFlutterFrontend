@@ -1,5 +1,7 @@
 import 'package:ecommerce_flutter/src/domain/models/Category.dart';
 import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/category/list/bloc/AdminCategoryListBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/category/list/bloc/AdminCategoryListEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/category/update/AdminCategoryUpdateContent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/category/update/bloc/AdminCategoryUpdateBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/category/update/bloc/AdminCategoryUpdateEvent.dart';
@@ -28,6 +30,13 @@ class _AdminCategoryUpdatePageState extends State<AdminCategoryUpdatePage> {
     });
   }
 
+  //este evento se ejecuta cuando se cierra la pantalla actual
+  @override
+  void dispose() {
+    super.dispose();
+    _bloc?.add(AdminCategoryUpdateResetForm());
+  }
+
   @override
   Widget build(BuildContext context) {
     // se inicializa la variable _bloc
@@ -38,9 +47,12 @@ class _AdminCategoryUpdatePageState extends State<AdminCategoryUpdatePage> {
         listener: (context, state) {
           final responseState = state.response;
           if (responseState is Success) {
+            context.read<AdminCategoryListBloc>().add(
+              AdminCategoryListGetCategory(),
+            );
             // _bloc?.add(AdminCategoryUpdateResetForm()); ... esto  no va en actualizacion
             Fluttertoast.showToast(
-              msg: 'La categoria fue creada correctamente',
+              msg: 'La categoria se actualizó correctamente',
               toastLength: Toast.LENGTH_LONG,
             );
           } else if (responseState is Error) {

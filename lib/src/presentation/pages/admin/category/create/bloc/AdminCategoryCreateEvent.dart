@@ -34,6 +34,8 @@ class AdminCategoryCreateFormSubmit extends AdminCategoryCreateEvent {
 
 class AdminCategoryCreateResetForm extends AdminCategoryCreateEvent {
   const AdminCategoryCreateResetForm();
+  @override
+  List<Object?> get props => [];
 }
 
 class AdminCategoryCreatePickImage extends AdminCategoryCreateEvent {

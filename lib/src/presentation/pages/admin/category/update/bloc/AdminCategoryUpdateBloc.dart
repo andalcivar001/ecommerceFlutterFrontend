@@ -21,6 +21,7 @@ class AdminCategoryUpdateBloc
     on<AdminCategoryUpdatePickImage>(_onPickImage);
     on<AdminCategoryUpdateTakePhoto>(_onTakePhoto);
     on<AdminCategoryUpdateFormSubmit>(_onFormSubmit);
+    on<AdminCategoryUpdateResetForm>(_onResetForm);
   }
 
   final formKey = GlobalKey<FormState>();
@@ -100,10 +101,18 @@ class AdminCategoryUpdateBloc
   ) async {
     emit(state.copyWith(response: Loading(), formKey: formKey));
 
-    Resource response = await categoryUseCases.create.run(
+    Resource response = await categoryUseCases.update.run(
+      state.id,
       state.toCategory(),
-      state.image!,
+      state.image,
     );
     emit(state.copyWith(response: response, formKey: formKey));
+  }
+
+  Future<void> _onResetForm(
+    AdminCategoryUpdateResetForm event,
+    Emitter<AdminCategoryUpdateState> emit,
+  ) async {
+    emit(state.resetForm());
   }
 }

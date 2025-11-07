@@ -86,13 +86,13 @@ class CategoryService {
     }
   }
 
-  Future<Resource<Category>> update(
+  Future<Resource<Category>> updateImage(
     int id,
     Category category,
     File file,
   ) async {
     try {
-      Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/categories/$id');
+      Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/categories/upload/$id');
       String token = "";
       final userSesion = await sharedPref.read('user');
       if (userSesion != null) {
@@ -111,10 +111,8 @@ class CategoryService {
           contentType: MediaType('image', 'jpg'),
         ),
       );
-      request.fields['category'] = json.encode({
-        'name': category.name,
-        'description': category.description,
-      });
+      request.fields['name'] = category.name;
+      request.fields['description'] = category.description;
       final response = await request.send();
       final data = json.decode(
         await response.stream.transform(utf8.decoder).first,
@@ -122,6 +120,65 @@ class CategoryService {
       if (response.statusCode == 201 || response.statusCode == 200) {
         Category categoryResponse = Category.fromJson(data);
         return Success(categoryResponse);
+      } else {
+        return Error(listToString(data['message']));
+      }
+    } catch (e) {
+      print('Error: $e');
+      return Error(e.toString());
+    }
+  }
+
+  Future<Resource<Category>> update(int id, Category category) async {
+    try {
+      print('Metodo actualizar sin imagen');
+      Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/categories/$id');
+      String token = "";
+      final userSesion = await sharedPref.read('user');
+      if (userSesion != null) {
+        AuthResponse authResponse = AuthResponse.fromJson(userSesion);
+        token = authResponse.token;
+      }
+      Map<String, String> headers = {
+        "Content-Type": "application/json",
+        "Authorization": token,
+      };
+      String body = json.encode({
+        'name': category.name,
+        'description': category.description,
+      });
+      final response = await http.put(url, headers: headers, body: body);
+      final data = json.decode(response.body);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        Category categoryResponse = Category.fromJson(data);
+        return Success(categoryResponse);
+      } else {
+        return Error(listToString(data['message']));
+      }
+    } catch (e) {
+      print('Error: $e');
+      return Error(e.toString());
+    }
+  }
+
+  Future<Resource<bool>> delet(int id) async {
+    try {
+      Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/categories/$id');
+      String token = "";
+      final userSesion = await sharedPref.read('user');
+      if (userSesion != null) {
+        AuthResponse authResponse = AuthResponse.fromJson(userSesion);
+        token = authResponse.token;
+      }
+      Map<String, String> headers = {
+        "Content-Type": "application/json",
+        "Authorization": token,
+      };
+
+      final response = await http.put(url, headers: headers);
+      final data = json.decode(response.body);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        return Success(true);
       } else {
         return Error(listToString(data['message']));
       }

@@ -19,4 +19,9 @@ class CategoryRepositoryImpl extends CategoryRepository {
   Future<Resource<List<Category>>> getCategories() {
     return categoryService.getCategories();
   }
+
+  @override
+  Future<Resource<Category>> update(int id, Category category, File file) {
+    return categoryService.update(id, category, file);
+  }
 }

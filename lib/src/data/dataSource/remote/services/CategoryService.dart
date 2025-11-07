@@ -85,4 +85,49 @@ class CategoryService {
       return Error(e.toString());
     }
   }
+
+  Future<Resource<Category>> update(
+    int id,
+    Category category,
+    File file,
+  ) async {
+    try {
+      Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/categories/$id');
+      String token = "";
+      final userSesion = await sharedPref.read('user');
+      if (userSesion != null) {
+        AuthResponse authResponse = AuthResponse.fromJson(userSesion);
+        token = authResponse.token;
+      }
+      final request = http.MultipartRequest('PUT', url);
+      request.headers['Authorization'] = token;
+
+      request.files.add(
+        http.MultipartFile(
+          'file',
+          http.ByteStream(file.openRead().cast()),
+          await file.length(),
+          filename: basename(file.path),
+          contentType: MediaType('image', 'jpg'),
+        ),
+      );
+      request.fields['category'] = json.encode({
+        'name': category.name,
+        'description': category.description,
+      });
+      final response = await request.send();
+      final data = json.decode(
+        await response.stream.transform(utf8.decoder).first,
+      );
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        Category categoryResponse = Category.fromJson(data);
+        return Success(categoryResponse);
+      } else {
+        return Error(listToString(data['message']));
+      }
+    } catch (e) {
+      print('Error: $e');
+      return Error(e.toString());
+    }
+  }
 }

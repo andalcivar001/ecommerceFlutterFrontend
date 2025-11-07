@@ -27,7 +27,16 @@ class AdminCategoryListItem extends StatelessWidget {
       trailing: Wrap(
         direction: Axis.horizontal,
         children: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                'admin/category/update',
+                arguments: category,
+              );
+            },
+            icon: Icon(Icons.edit),
+          ),
           IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
         ],
       ),

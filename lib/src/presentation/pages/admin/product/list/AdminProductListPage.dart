@@ -10,6 +10,15 @@ class AdminProductListPage extends StatefulWidget {
 class _AdminProductListPageState extends State<AdminProductListPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text('AdminProductLIstPage')));
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, 'admin/product/create');
+        },
+        backgroundColor: Colors.black,
+        child: Icon(Icons.add, color: Colors.white),
+      ),
+      body: Center(child: Text('AdminProductLIstPage')),
+    );
   }
 }

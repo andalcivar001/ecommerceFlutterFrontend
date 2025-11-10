@@ -1,17 +1,17 @@
-import 'package:ecommerce_flutter/src/presentation/pages/admin/category/create/bloc/AdminCategoryCreateBloc.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/admin/category/create/bloc/AdminCategoryCreateEvent.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/admin/category/create/bloc/AdminCategoryCreateState.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/create/bloc/AdminProductCreateBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/create/bloc/AdminProductCreateEvent.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/create/bloc/AdminProductState.dart';
 import 'package:ecommerce_flutter/src/presentation/utils/BlocFormItem.dart';
 import 'package:ecommerce_flutter/src/presentation/utils/SelectOptionImageDialog.dart';
 import 'package:ecommerce_flutter/src/presentation/widgets/DefaultIconBack.dart';
 import 'package:ecommerce_flutter/src/presentation/widgets/DefaultTextField.dart';
 import 'package:flutter/material.dart';
 
-class AdminCategoryCreateContent extends StatelessWidget {
-  AdminCategoryCreateBloc? bloc;
-  AdminCategoryCreateState state;
+class AdminProductCreateContent extends StatelessWidget {
+  AdminProductCreateBloc? bloc;
+  AdminProductCreateState state;
 
-  AdminCategoryCreateContent(this.bloc, this.state);
+  AdminProductCreateContent(this.bloc, this.state);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class AdminCategoryCreateContent extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 35),
         child: Column(
           children: [
-            _textNewCategory(),
+            _textNewProduct(),
             _textFieldName(),
             _textFieldDescription(),
             _fabSubmit(),
@@ -68,7 +68,7 @@ class AdminCategoryCreateContent extends StatelessWidget {
       child: FloatingActionButton(
         onPressed: () {
           if (state.formKey!.currentState!.validate()) {
-            bloc?.add(AdminCategoryCreateFormSubmit());
+            bloc?.add(AdminProductCreateFormSubmit());
           }
         },
         backgroundColor: Colors.black,
@@ -77,21 +77,21 @@ class AdminCategoryCreateContent extends StatelessWidget {
     );
   }
 
-  Widget _textNewCategory() {
+  Widget _textNewProduct() {
     return Container(
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.only(top: 35, left: 10, bottom: 10),
-      child: Text('NUEVA CATEGORIA', style: TextStyle(fontSize: 17)),
+      child: Text('NUEVO PRODUCTO', style: TextStyle(fontSize: 17)),
     );
   }
 
   Widget _textFieldName() {
     return DefaultTextField(
-      label: 'Nombre de la categoria',
+      label: 'Nombre del producto',
       icon: Icons.category,
       onChanged: (text) {
         bloc?.add(
-          AdminCategoryCreateNameChanged(name: BlocFormItem(value: text)),
+          AdminProductCreateNameChanged(name: BlocFormItem(value: text)),
         );
       },
       validator: (value) {
@@ -107,7 +107,7 @@ class AdminCategoryCreateContent extends StatelessWidget {
       icon: Icons.list,
       onChanged: (text) {
         bloc?.add(
-          AdminCategoryCreateDescriptionChanged(
+          AdminProductCreateDescriptionChanged(
             description: BlocFormItem(value: text),
           ),
         );
@@ -125,10 +125,10 @@ class AdminCategoryCreateContent extends StatelessWidget {
         SelectOpctionImageDialog(
           context,
           () {
-            bloc?.add(AdminCategoryCreatePickImage());
+            bloc?.add(AdminProductCreatePickImage());
           },
           () {
-            bloc?.add(AdminCategoryCreateTakePhoto());
+            bloc?.add(AdminProductCreateTakePhoto());
           },
         );
       },

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class DefaultTextField extends StatelessWidget {
   String label;
   String? errorText;
+  TextInputType? textInputType;
   IconData icon;
   Function(String text)? onChanged;
   String? Function(String?)? validator;
@@ -19,6 +20,7 @@ class DefaultTextField extends StatelessWidget {
     this.isPassword = false,
     this.initialValue,
     this.color = Colors.white,
+    this.textInputType = TextInputType.text,
   }) : super(key: key);
 
   @override
@@ -30,6 +32,7 @@ class DefaultTextField extends StatelessWidget {
         onChanged!(text);
       },
       validator: validator,
+      keyboardType: textInputType,
       decoration: InputDecoration(
         label: Text(label, style: TextStyle(color: color)),
         prefixIcon: Icon(icon, color: color),

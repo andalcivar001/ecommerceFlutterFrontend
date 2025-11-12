@@ -28,6 +28,13 @@ class AdminProductCreateDescriptionChanged extends AdminProductCreateEvent {
   List<Object?> get props => [description];
 }
 
+class AdminProductCreatePriceChanged extends AdminProductCreateEvent {
+  final BlocFormItem price;
+  const AdminProductCreatePriceChanged({required this.price});
+  @override
+  List<Object?> get props => [price];
+}
+
 class AdminProductCreateFormSubmit extends AdminProductCreateEvent {
   const AdminProductCreateFormSubmit();
 }
@@ -39,9 +46,11 @@ class AdminProductCreateResetForm extends AdminProductCreateEvent {
 }
 
 class AdminProductCreatePickImage extends AdminProductCreateEvent {
-  const AdminProductCreatePickImage();
+  final int numberFile;
+  const AdminProductCreatePickImage({required this.numberFile});
 }
 
 class AdminProductCreateTakePhoto extends AdminProductCreateEvent {
-  const AdminProductCreateTakePhoto();
+  final int numberFile;
+  const AdminProductCreateTakePhoto({required this.numberFile});
 }

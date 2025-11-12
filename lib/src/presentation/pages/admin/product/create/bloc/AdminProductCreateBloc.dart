@@ -18,6 +18,7 @@ class AdminProductCreateBloc
     on<AdminProductCreateInitEvent>(_onInitEvent);
     on<AdminProductCreateNameChanged>(_onNameChanged);
     on<AdminProductCreateDescriptionChanged>(_onDescriptionChanged);
+    on<AdminProductCreatePriceChanged>(_onPriceChanged);
     on<AdminProductCreatePickImage>(_onPickImage);
     on<AdminProductCreateTakePhoto>(_onTakePhoto);
     on<AdminProductCreateFormSubmit>(_onFormSubmit);
@@ -66,6 +67,21 @@ class AdminProductCreateBloc
     );
   }
 
+  Future<void> _onPriceChanged(
+    AdminProductCreatePriceChanged event,
+    Emitter<AdminProductCreateState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        price: BlocFormItem(
+          value: event.price.value,
+          error: event.price.value.isNotEmpty ? null : 'Ingresa el precio',
+        ),
+        formKey: formKey,
+      ),
+    );
+  }
+
   Future<void> _onPickImage(
     AdminProductCreatePickImage event,
     Emitter<AdminProductCreateState> emit,
@@ -73,7 +89,11 @@ class AdminProductCreateBloc
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-      emit(state.copyWith(image: File(image.path), formKey: formKey));
+      if (event.numberFile == 1) {
+        emit(state.copyWith(image1: File(image.path), formKey: formKey));
+      } else if (event.numberFile == 2) {
+        emit(state.copyWith(image2: File(image.path), formKey: formKey));
+      }
     }
   }
 
@@ -84,7 +104,11 @@ class AdminProductCreateBloc
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.camera);
     if (image != null) {
-      emit(state.copyWith(image: File(image.path), formKey: formKey));
+      if (event.numberFile == 1) {
+        emit(state.copyWith(image1: File(image.path), formKey: formKey));
+      } else if (event.numberFile == 2) {
+        emit(state.copyWith(image2: File(image.path), formKey: formKey));
+      }
     }
   }
 
@@ -94,11 +118,11 @@ class AdminProductCreateBloc
   ) async {
     emit(state.copyWith(response: Loading(), formKey: formKey));
 
-    Resource response = await categoryUseCases.create.run(
-      state.toCategory(),
-      state.image!,
-    );
-    emit(state.copyWith(response: response, formKey: formKey));
+    // Resource response = await categoryUseCases.create.run(
+    //   state.toCategory(),
+    //   state.image!,
+    // );
+    // emit(state.copyWith(response: response, formKey: formKey));
   }
 
   Future<void> _onResetForm(

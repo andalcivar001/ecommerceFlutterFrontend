@@ -26,7 +26,18 @@ class AdminProductCreateContent extends StatelessWidget {
               height: MediaQuery.of(context).size.height,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [_imageCategory(context), _cardCategoryForm(context)],
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+
+                    children: [
+                      _imageProductOne(context),
+                      SizedBox(width: 20),
+                      _imageProductTwo(context),
+                    ],
+                  ),
+                  _cardCategoryForm(context),
+                ],
               ),
             ),
           ),
@@ -39,7 +50,7 @@ class AdminProductCreateContent extends StatelessWidget {
   Widget _cardCategoryForm(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.38,
+      height: MediaQuery.of(context).size.height * 0.53,
       decoration: BoxDecoration(
         color: Color.fromRGBO(255, 255, 255, 0.7),
         borderRadius: BorderRadius.only(
@@ -54,6 +65,7 @@ class AdminProductCreateContent extends StatelessWidget {
             _textNewProduct(),
             _textFieldName(),
             _textFieldDescription(),
+            _textFieldPrice(),
             _fabSubmit(),
           ],
         ),
@@ -119,16 +131,33 @@ class AdminProductCreateContent extends StatelessWidget {
     );
   }
 
-  Widget _imageCategory(BuildContext context) {
+  Widget _textFieldPrice() {
+    return DefaultTextField(
+      label: 'Precio del producto',
+      icon: Icons.money,
+      textInputType: TextInputType.number,
+      onChanged: (text) {
+        bloc?.add(
+          AdminProductCreatePriceChanged(price: BlocFormItem(value: text)),
+        );
+      },
+      validator: (value) {
+        return state.price.error;
+      },
+      color: Colors.black,
+    );
+  }
+
+  Widget _imageProductOne(BuildContext context) {
     return GestureDetector(
       onTap: () {
         SelectOpctionImageDialog(
           context,
           () {
-            bloc?.add(AdminProductCreatePickImage());
+            bloc?.add(AdminProductCreatePickImage(numberFile: 1));
           },
           () {
-            bloc?.add(AdminProductCreateTakePhoto());
+            bloc?.add(AdminProductCreateTakePhoto(numberFile: 1));
           },
         );
       },
@@ -139,8 +168,37 @@ class AdminProductCreateContent extends StatelessWidget {
           aspectRatio: 1 / 1,
           child: ClipOval(
             child:
-                state.image != null
-                    ? Image.file(state.image!, fit: BoxFit.cover)
+                state.image1 != null
+                    ? Image.file(state.image1!, fit: BoxFit.cover)
+                    : Image.asset('assets/img/no-image.png', fit: BoxFit.cover),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _imageProductTwo(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        SelectOpctionImageDialog(
+          context,
+          () {
+            bloc?.add(AdminProductCreatePickImage(numberFile: 2));
+          },
+          () {
+            bloc?.add(AdminProductCreateTakePhoto(numberFile: 2));
+          },
+        );
+      },
+      child: Container(
+        width: 150,
+        margin: EdgeInsets.only(top: 100),
+        child: AspectRatio(
+          aspectRatio: 1 / 1,
+          child: ClipOval(
+            child:
+                state.image2 != null
+                    ? Image.file(state.image2!, fit: BoxFit.cover)
                     : Image.asset('assets/img/no-image.png', fit: BoxFit.cover),
           ),
         ),

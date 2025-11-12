@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ecommerce_flutter/src/domain/models/Category.dart';
+import 'package:ecommerce_flutter/src/domain/models/Product.dart';
 import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
 import 'package:ecommerce_flutter/src/presentation/utils/BlocFormItem.dart';
 import 'package:equatable/equatable.dart';
@@ -11,8 +12,10 @@ class AdminProductCreateState extends Equatable {
   final BlocFormItem description;
   final BlocFormItem price;
   final GlobalKey<FormState>? formKey;
+  final int idCategory;
   final File? image1;
   final File? image2;
+
   final Resource? response;
 
   const AdminProductCreateState({
@@ -23,6 +26,7 @@ class AdminProductCreateState extends Equatable {
     this.image1,
     this.image2,
     this.response,
+    this.idCategory = 0,
   });
 
   AdminProductCreateState resetForm() {
@@ -32,9 +36,15 @@ class AdminProductCreateState extends Equatable {
     );
   }
 
-  toCategory() => Category(name: name.value, description: description.value);
+  toProduct() => Product(
+    name: name.value,
+    description: description.value,
+    price: double.parse(price.value),
+    idCategory: idCategory,
+  );
 
   AdminProductCreateState copyWith({
+    int? idCategory,
     BlocFormItem? name,
     BlocFormItem? description,
     BlocFormItem? price,
@@ -51,6 +61,7 @@ class AdminProductCreateState extends Equatable {
       image2: image2 ?? this.image2,
       formKey: formKey,
       response: response,
+      idCategory: idCategory ?? this.idCategory,
     );
   }
 
@@ -63,5 +74,6 @@ class AdminProductCreateState extends Equatable {
     image1,
     image2,
     response,
+    idCategory,
   ];
 }

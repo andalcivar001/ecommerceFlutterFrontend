@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:ecommerce_flutter/src/domain/useCases/category/CategoryUseCases.dart';
+import 'package:ecommerce_flutter/src/domain/useCases/products/ProductUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/product/create/bloc/AdminProductCreateEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/product/create/bloc/AdminProductState.dart';
@@ -11,9 +11,9 @@ import 'package:image_picker/image_picker.dart';
 
 class AdminProductCreateBloc
     extends Bloc<AdminProductCreateEvent, AdminProductCreateState> {
-  CategoryUseCases categoryUseCases;
+  ProductUseCases productUseCases;
 
-  AdminProductCreateBloc(this.categoryUseCases)
+  AdminProductCreateBloc(this.productUseCases)
     : super(AdminProductCreateState()) {
     on<AdminProductCreateInitEvent>(_onInitEvent);
     on<AdminProductCreateNameChanged>(_onNameChanged);
@@ -118,11 +118,11 @@ class AdminProductCreateBloc
   ) async {
     emit(state.copyWith(response: Loading(), formKey: formKey));
 
-    // Resource response = await categoryUseCases.create.run(
-    //   state.toCategory(),
-    //   state.image!,
-    // );
-    // emit(state.copyWith(response: response, formKey: formKey));
+    Resource response = await productUseCases.create.run(
+      state.toProduct(),
+      state.image!,
+    );
+    emit(state.copyWith(response: response, formKey: formKey));
   }
 
   Future<void> _onResetForm(

@@ -31,7 +31,7 @@ class AdminProductCreateBloc
     AdminProductCreateInitEvent event,
     Emitter<AdminProductCreateState> emit,
   ) async {
-    emit(state.copyWith(formKey: formKey));
+    emit(state.copyWith(idCategory: event.category?.id, formKey: formKey));
   }
 
   Future<void> _onNameChanged(
@@ -118,11 +118,23 @@ class AdminProductCreateBloc
   ) async {
     emit(state.copyWith(response: Loading(), formKey: formKey));
 
-    Resource response = await productUseCases.create.run(
-      state.toProduct(),
-      state.image!,
-    );
-    emit(state.copyWith(response: response, formKey: formKey));
+    if (state.image1 != null && state.image2 != null) {
+      List<File> images = [state.image1!, state.image2!];
+
+      Resource response = await productUseCases.create.run(
+        state.toProduct(),
+        images,
+      );
+
+      emit(state.copyWith(response: response, formKey: formKey));
+    } else {
+      emit(
+        state.copyWith(
+          response: Error('Por favor ingresa las dos imagenes'),
+          formKey: formKey,
+        ),
+      );
+    }
   }
 
   Future<void> _onResetForm(

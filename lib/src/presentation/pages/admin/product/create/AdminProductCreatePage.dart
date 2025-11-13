@@ -1,3 +1,4 @@
+import 'package:ecommerce_flutter/src/domain/models/Category.dart';
 import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/category/list/bloc/AdminCategoryListBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/category/list/bloc/AdminCategoryListEvent.dart';
@@ -18,9 +19,19 @@ class AdminProductCreatePage extends StatefulWidget {
 
 class _AdminProductCreatePageState extends State<AdminProductCreatePage> {
   AdminProductCreateBloc? _bloc;
+  Category? category;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _bloc?.add(AdminProductCreateInitEvent(category: category));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    category = ModalRoute.of(context)?.settings.arguments as Category?;
     // se inicializa la variable _bloc
     _bloc = BlocProvider.of<AdminProductCreateBloc>(context);
     return Scaffold(
@@ -28,9 +39,9 @@ class _AdminProductCreatePageState extends State<AdminProductCreatePage> {
         listener: (context, state) {
           final responseState = state.response;
           if (responseState is Success) {
-            context.read<AdminCategoryListBloc>().add(
-              AdminCategoryListGetCategory(),
-            );
+            // context.read<AdminCategoryListBloc>().add(
+            //   AdminCategoryListGetCategory(),
+            // );
             _bloc?.add(AdminProductCreateResetForm());
 
             Fluttertoast.showToast(

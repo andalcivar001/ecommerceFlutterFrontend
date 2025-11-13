@@ -62,4 +62,37 @@ class ProductService {
       return Error(e.toString());
     }
   }
+
+  Future<Resource<List<Product>>> getProductsByCategory(
+    String idCategory,
+  ) async {
+    try {
+      Uri url = Uri.http(
+        Apiconfig.API_ECOMMERCE,
+        '/products/category/$idCategory',
+      );
+      String token = "";
+      final userSesion = await sharedPref.read('user');
+      if (userSesion != null) {
+        AuthResponse authResponse = AuthResponse.fromJson(userSesion);
+        token = authResponse.token;
+      }
+      Map<String, String> headers = {
+        "Content-Type": "application/json",
+        "Authorization": token,
+      };
+
+      final response = await http.get(url, headers: headers);
+      final data = json.decode(response.body);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        List<Product> productResponse = Product.fromJsonList(data);
+        return Success(productResponse);
+      } else {
+        return Error(listToString(data['message']));
+      }
+    } catch (e) {
+      print('Error: $e');
+      return Error(e.toString());
+    }
+  }
 }

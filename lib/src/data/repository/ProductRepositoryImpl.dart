@@ -13,4 +13,9 @@ class ProductRepositoryImpl implements ProductRepository {
   Future<Resource<Product>> create(Product product, List<File> images) {
     return productService.create(product, images);
   }
+
+  @override
+  Future<Resource<List<Product>>> getProductsByCategory(String idCategory) {
+    return productService.getProductsByCategory(idCategory);
+  }
 }

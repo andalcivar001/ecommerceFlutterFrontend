@@ -12,22 +12,17 @@ import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart';
 
 class CategoryService {
-  SharedPref sharedPref;
+  Future<String> token;
 
-  CategoryService(this.sharedPref);
+  CategoryService(this.token);
 
   Future<Resource<Category>> create(Category category, File file) async {
     try {
       print('Metodo actualizar con imagen');
       Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/categories');
-      String token = "";
-      final userSesion = await sharedPref.read('user');
-      if (userSesion != null) {
-        AuthResponse authResponse = AuthResponse.fromJson(userSesion);
-        token = authResponse.token;
-      }
+
       final request = http.MultipartRequest('POST', url);
-      request.headers['Authorization'] = token;
+      request.headers['Authorization'] = await token;
       request.files.add(
         http.MultipartFile(
           'file',
@@ -60,15 +55,10 @@ class CategoryService {
   Future<Resource<List<Category>>> getCategories() async {
     try {
       Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/categories');
-      String token = "";
-      final userSesion = await sharedPref.read('user');
-      if (userSesion != null) {
-        AuthResponse authResponse = AuthResponse.fromJson(userSesion);
-        token = authResponse.token;
-      }
+
       Map<String, String> headers = {
         "Content-Type": "application/json",
-        "Authorization": token,
+        "Authorization": await token,
       };
 
       final response = await http.get(url, headers: headers);
@@ -92,14 +82,9 @@ class CategoryService {
   ) async {
     try {
       Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/categories/upload/$id');
-      String token = "";
-      final userSesion = await sharedPref.read('user');
-      if (userSesion != null) {
-        AuthResponse authResponse = AuthResponse.fromJson(userSesion);
-        token = authResponse.token;
-      }
+
       final request = http.MultipartRequest('PUT', url);
-      request.headers['Authorization'] = token;
+      request.headers['Authorization'] = await token;
 
       request.files.add(
         http.MultipartFile(
@@ -132,15 +117,10 @@ class CategoryService {
     try {
       print('Metodo actualizar sin imagen');
       Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/categories/$id');
-      String token = "";
-      final userSesion = await sharedPref.read('user');
-      if (userSesion != null) {
-        AuthResponse authResponse = AuthResponse.fromJson(userSesion);
-        token = authResponse.token;
-      }
+
       Map<String, String> headers = {
         "Content-Type": "application/json",
-        "Authorization": token,
+        "Authorization": await token,
       };
       String body = json.encode({
         'name': category.name,
@@ -163,15 +143,10 @@ class CategoryService {
   Future<Resource<bool>> delet(int id) async {
     try {
       Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/categories/$id');
-      String token = "";
-      final userSesion = await sharedPref.read('user');
-      if (userSesion != null) {
-        AuthResponse authResponse = AuthResponse.fromJson(userSesion);
-        token = authResponse.token;
-      }
+
       Map<String, String> headers = {
         "Content-Type": "application/json",
-        "Authorization": token,
+        "Authorization": await token,
       };
 
       final response = await http.put(url, headers: headers);

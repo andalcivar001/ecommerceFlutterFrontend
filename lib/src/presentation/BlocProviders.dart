@@ -9,7 +9,7 @@ import 'package:ecommerce_flutter/src/presentation/pages/admin/category/list/blo
 import 'package:ecommerce_flutter/src/presentation/pages/admin/category/update/bloc/AdminCategoryUpdateBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/home/bloc/AdminHomeBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/product/create/bloc/AdminProductCreateBloc.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/admin/product/create/bloc/AdminProductCreateEvent.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/list/bloc/AdminProductListBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/auth/login/bloc/LoginBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/auth/login/bloc/LoginEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/auth/register/bloc/RegisterBloc.dart';
@@ -63,5 +63,8 @@ List<BlocProvider> blocProviders = [
   ),
   BlocProvider<AdminProductCreateBloc>(
     create: (context) => AdminProductCreateBloc(locator<ProductUseCases>()),
+  ),
+  BlocProvider<AdminProductListBloc>(
+    create: (context) => AdminProductListBloc(locator<ProductUseCases>()),
   ),
 ];

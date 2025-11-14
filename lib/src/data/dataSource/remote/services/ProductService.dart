@@ -12,22 +12,16 @@ import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart';
 
 class ProductService {
-  SharedPref sharedPref;
-
-  ProductService(this.sharedPref);
+  Future<String> token;
+  ProductService(this.token);
 
   Future<Resource<Product>> create(Product product, List<File> files) async {
     try {
       print('Metodo actualizar con imagen');
       Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/products');
-      String token = "";
-      final userSesion = await sharedPref.read('user');
-      if (userSesion != null) {
-        AuthResponse authResponse = AuthResponse.fromJson(userSesion);
-        token = authResponse.token;
-      }
+
       final request = http.MultipartRequest('POST', url);
-      request.headers['Authorization'] = token;
+      request.headers['Authorization'] = await token;
 
       files.forEach((file) async {
         request.files.add(
@@ -63,23 +57,16 @@ class ProductService {
     }
   }
 
-  Future<Resource<List<Product>>> getProductsByCategory(
-    String idCategory,
-  ) async {
+  Future<Resource<List<Product>>> getProductsByCategory(int idCategory) async {
     try {
       Uri url = Uri.http(
         Apiconfig.API_ECOMMERCE,
         '/products/category/$idCategory',
       );
-      String token = "";
-      final userSesion = await sharedPref.read('user');
-      if (userSesion != null) {
-        AuthResponse authResponse = AuthResponse.fromJson(userSesion);
-        token = authResponse.token;
-      }
+
       Map<String, String> headers = {
         "Content-Type": "application/json",
-        "Authorization": token,
+        "Authorization": await token,
       };
 
       final response = await http.get(url, headers: headers);

@@ -7,6 +7,7 @@ import 'package:ecommerce_flutter/src/data/dataSource/remote/services/AuthServic
 import 'package:ecommerce_flutter/src/data/repository/CategoryRepositoryImpl.dart';
 import 'package:ecommerce_flutter/src/data/repository/ProductRepositoryImpl.dart';
 import 'package:ecommerce_flutter/src/data/repository/UserRepositoryImpl.dart';
+import 'package:ecommerce_flutter/src/domain/models/AuthResponse.dart';
 import 'package:ecommerce_flutter/src/domain/repository/AuthRepository.dart';
 import 'package:ecommerce_flutter/src/domain/repository/CategoryRepository.dart';
 import 'package:ecommerce_flutter/src/domain/repository/ProductRepository.dart';
@@ -23,6 +24,7 @@ import 'package:ecommerce_flutter/src/domain/useCases/category/DeleteCategoryUse
 import 'package:ecommerce_flutter/src/domain/useCases/category/GetCategoryUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/category/UpdateCategoryUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/products/CreateProductUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/useCases/products/GetProductsByCategory.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/products/ProductUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/users/UpdateUserUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/users/UsersUseCases.dart';
@@ -34,16 +36,27 @@ abstract class Appmodule {
   AuthService get authService => AuthService();
 
   @injectable
+  Future<String> get token async {
+    String token = "";
+    final userSesion = await sharedPref.read('user');
+    if (userSesion != null) {
+      AuthResponse authResponse = AuthResponse.fromJson(userSesion);
+      token = authResponse.token;
+    }
+    return token;
+  }
+
+  @injectable
   SharedPref get sharedPref => SharedPref();
 
   @injectable
-  UserService get userService => UserService(sharedPref);
+  UserService get userService => UserService(token);
 
   @injectable
-  CategoryService get categoryService => CategoryService(sharedPref);
+  CategoryService get categoryService => CategoryService(token);
 
   @injectable
-  ProductService get productService => ProductService(sharedPref);
+  ProductService get productService => ProductService(token);
 
   @injectable
   AuthRepository get authrepository =>
@@ -82,6 +95,8 @@ abstract class Appmodule {
   );
 
   @injectable
-  ProductUseCases get productUseCases =>
-      ProductUseCases(create: CreateProductUseCase(productRepository));
+  ProductUseCases get productUseCases => ProductUseCases(
+    create: CreateProductUseCase(productRepository),
+    getProductsByCategory: GetProductsByCategory(productRepository),
+  );
 }

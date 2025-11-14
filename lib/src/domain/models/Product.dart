@@ -47,7 +47,11 @@ class Product {
             ? int.parse(json["id_category"])
             : json["id_category"],
     price:
-        json["price"] is String ? double.parse(json["price"]) : json["price"],
+        json["price"] is String
+            ? double.parse(json["price"])
+            : json["price"] is int
+            ? (json["price"]).toDouble()
+            : json["price"],
   );
 
   Map<String, dynamic> toJson() => {

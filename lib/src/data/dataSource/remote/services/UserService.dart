@@ -11,22 +11,17 @@ import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart';
 
 class UserService {
-  SharedPref sharedPref;
+  Future<String> token;
 
-  UserService(this.sharedPref);
+  UserService(this.token);
   Future<Resource<User>> update(int id, User user) async {
     try {
       print('Metodo actualizar sin imagen');
       Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/users/$id');
-      String token = "";
-      final userSesion = await sharedPref.read('user');
-      if (userSesion != null) {
-        AuthResponse authResponse = AuthResponse.fromJson(userSesion);
-        token = authResponse.token;
-      }
+
       Map<String, String> headers = {
         "Content-Type": "application/json",
-        "Authorization": token,
+        "Authorization": await token,
       };
       String body = json.encode({
         'name': user.name,
@@ -51,14 +46,9 @@ class UserService {
     try {
       print('Metodo actualizar con imagen');
       Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/users/upload/$id');
-      String token = "";
-      final userSesion = await sharedPref.read('user');
-      if (userSesion != null) {
-        AuthResponse authResponse = AuthResponse.fromJson(userSesion);
-        token = authResponse.token;
-      }
+
       final request = http.MultipartRequest('PUT', url);
-      request.headers['Authorization'] = token;
+      request.headers['Authorization'] = await token;
 
       request.files.add(
         http.MultipartFile(

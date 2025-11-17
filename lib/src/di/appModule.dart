@@ -26,6 +26,7 @@ import 'package:ecommerce_flutter/src/domain/useCases/category/UpdateCategoryUse
 import 'package:ecommerce_flutter/src/domain/useCases/products/CreateProductUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/products/GetProductsByCategory.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/products/ProductUseCases.dart';
+import 'package:ecommerce_flutter/src/domain/useCases/products/UpdateProductUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/users/UpdateUserUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/users/UsersUseCases.dart';
 import 'package:injectable/injectable.dart';
@@ -98,5 +99,6 @@ abstract class Appmodule {
   ProductUseCases get productUseCases => ProductUseCases(
     create: CreateProductUseCase(productRepository),
     getProductsByCategory: GetProductsByCategory(productRepository),
+    update: UpdateProductUseCase(productRepository),
   );
 }

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:ecommerce_flutter/src/domain/useCases/products/ProductUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/product/create/bloc/AdminProductCreateEvent.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/admin/product/create/bloc/AdminProductState.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/create/bloc/AdminProductCreateState.dart';
 import 'package:ecommerce_flutter/src/presentation/utils/BlocFormItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -22,12 +22,15 @@ class AdminProductListItem extends StatelessWidget {
             product != null
                 ? Container(
                   width: 70,
-                  child: FadeInImage.assetNetwork(
-                    placeholder: 'assets/img/user_image.png',
-                    image: product!.image1!,
-                    fit: BoxFit.cover,
-                    fadeInDuration: Duration(seconds: 1),
-                  ),
+                  child:
+                      product!.image1!.isNotEmpty
+                          ? FadeInImage.assetNetwork(
+                            placeholder: 'assets/img/user_image.png',
+                            image: product!.image1!,
+                            fit: BoxFit.cover,
+                            fadeInDuration: Duration(seconds: 1),
+                          )
+                          : Container(),
                 )
                 : Container(),
         title: Text(product?.name ?? ''),
@@ -47,11 +50,11 @@ class AdminProductListItem extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () {
-                // Navigator.pushNamed(
-                //   context,
-                //   'admin/category/update',
-                //   arguments: product,
-                // );
+                Navigator.pushNamed(
+                  context,
+                  'admin/product/update',
+                  arguments: product,
+                );
               },
               icon: Icon(Icons.edit),
             ),

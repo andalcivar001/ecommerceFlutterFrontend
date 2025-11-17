@@ -18,4 +18,23 @@ class ProductRepositoryImpl implements ProductRepository {
   Future<Resource<List<Product>>> getProductsByCategory(int idCategory) {
     return productService.getProductsByCategory(idCategory);
   }
+
+  @override
+  Future<Resource<Product>> udpate(
+    int id,
+    Product product,
+    List<File>? images,
+    List<int>? imagesToUpdate,
+  ) {
+    if (images != null && imagesToUpdate != null) {
+      return productService.updateWithImage(
+        id,
+        product,
+        images,
+        imagesToUpdate,
+      );
+    } else {
+      return productService.update(id, product);
+    }
+  }
 }

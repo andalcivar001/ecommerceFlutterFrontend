@@ -1,17 +1,19 @@
-import 'package:ecommerce_flutter/src/presentation/pages/admin/product/create/bloc/AdminProductCreateBloc.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/admin/product/create/bloc/AdminProductCreateEvent.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/admin/product/create/bloc/AdminProductCreateState.dart';
+import 'package:ecommerce_flutter/src/domain/models/Product.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/update/bloc/AdminProductUpdateBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/update/bloc/AdminProductUpdateEvent.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/update/bloc/AdminProductUpdateState.dart';
 import 'package:ecommerce_flutter/src/presentation/utils/BlocFormItem.dart';
 import 'package:ecommerce_flutter/src/presentation/utils/SelectOptionImageDialog.dart';
 import 'package:ecommerce_flutter/src/presentation/widgets/DefaultIconBack.dart';
 import 'package:ecommerce_flutter/src/presentation/widgets/DefaultTextField.dart';
 import 'package:flutter/material.dart';
 
-class AdminProductCreateContent extends StatelessWidget {
-  AdminProductCreateBloc? bloc;
-  AdminProductCreateState state;
+class AdminProductUpdateContent extends StatelessWidget {
+  AdminProductUpdateBloc? bloc;
+  AdminProductUpdateState state;
+  Product? product;
 
-  AdminProductCreateContent(this.bloc, this.state);
+  AdminProductUpdateContent(this.bloc, this.state, this.product);
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +82,7 @@ class AdminProductCreateContent extends StatelessWidget {
       child: FloatingActionButton(
         onPressed: () {
           if (state.formKey!.currentState!.validate()) {
-            bloc?.add(AdminProductCreateFormSubmit());
+            bloc?.add(AdminProductUpdateFormSubmit());
           }
         },
         backgroundColor: Colors.black,
@@ -103,9 +105,10 @@ class AdminProductCreateContent extends StatelessWidget {
       icon: Icons.category,
       onChanged: (text) {
         bloc?.add(
-          AdminProductCreateNameChanged(name: BlocFormItem(value: text)),
+          AdminProductUpdateNameChanged(name: BlocFormItem(value: text)),
         );
       },
+      initialValue: product?.name ?? '',
       validator: (value) {
         return state.name.error;
       },
@@ -119,11 +122,13 @@ class AdminProductCreateContent extends StatelessWidget {
       icon: Icons.list,
       onChanged: (text) {
         bloc?.add(
-          AdminProductCreateDescriptionChanged(
+          AdminProductUpdateDescriptionChanged(
             description: BlocFormItem(value: text),
           ),
         );
       },
+      initialValue: product?.description ?? '',
+
       validator: (value) {
         return state.description.error;
       },
@@ -136,9 +141,11 @@ class AdminProductCreateContent extends StatelessWidget {
       label: 'Precio del producto',
       icon: Icons.money,
       textInputType: TextInputType.number,
+      initialValue: product?.price.toString() ?? '',
+
       onChanged: (text) {
         bloc?.add(
-          AdminProductCreatePriceChanged(price: BlocFormItem(value: text)),
+          AdminProductUpdatePriceChanged(price: BlocFormItem(value: text)),
         );
       },
       validator: (value) {
@@ -154,10 +161,10 @@ class AdminProductCreateContent extends StatelessWidget {
         SelectOpctionImageDialog(
           context,
           () {
-            bloc?.add(AdminProductCreatePickImage(numberFile: 1));
+            bloc?.add(AdminProductUpdatePickImage(numberFile: 1));
           },
           () {
-            bloc?.add(AdminProductCreateTakePhoto(numberFile: 1));
+            bloc?.add(AdminProductUpdateTakePhoto(numberFile: 1));
           },
         );
       },
@@ -170,6 +177,13 @@ class AdminProductCreateContent extends StatelessWidget {
             child:
                 state.image1 != null
                     ? Image.file(state.image1!, fit: BoxFit.cover)
+                    : product != null
+                    ? FadeInImage.assetNetwork(
+                      placeholder: 'assets/img/user_image.png',
+                      image: product!.image1!,
+                      fit: BoxFit.cover,
+                      fadeInDuration: Duration(seconds: 1),
+                    )
                     : Image.asset('assets/img/no-image.png', fit: BoxFit.cover),
           ),
         ),
@@ -183,10 +197,10 @@ class AdminProductCreateContent extends StatelessWidget {
         SelectOpctionImageDialog(
           context,
           () {
-            bloc?.add(AdminProductCreatePickImage(numberFile: 2));
+            bloc?.add(AdminProductUpdatePickImage(numberFile: 2));
           },
           () {
-            bloc?.add(AdminProductCreateTakePhoto(numberFile: 2));
+            bloc?.add(AdminProductUpdateTakePhoto(numberFile: 2));
           },
         );
       },
@@ -199,6 +213,13 @@ class AdminProductCreateContent extends StatelessWidget {
             child:
                 state.image2 != null
                     ? Image.file(state.image2!, fit: BoxFit.cover)
+                    : product != null
+                    ? FadeInImage.assetNetwork(
+                      placeholder: 'assets/img/user_image.png',
+                      image: product!.image2!,
+                      fit: BoxFit.cover,
+                      fadeInDuration: Duration(seconds: 1),
+                    )
                     : Image.asset('assets/img/no-image.png', fit: BoxFit.cover),
           ),
         ),

@@ -5,6 +5,7 @@ import 'package:ecommerce_flutter/src/presentation/pages/admin/category/update/A
 import 'package:ecommerce_flutter/src/presentation/pages/admin/home/AdminHomePage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/product/create/AdminProductCreatePage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/product/list/AdminProductListPage.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/update/AdminProductUpdatePage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/auth/login/LoginPage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/auth/register/RegisterPage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/home/ClientHomePage.dart';
@@ -54,6 +55,8 @@ class MyApp extends StatelessWidget {
               (BuildContext context) => AdminProductListPage(),
           "admin/product/create":
               (BuildContext context) => AdminProductCreatePage(),
+          "admin/product/update":
+              (BuildContext context) => AdminProductUpdatePage(),
         },
       ),
     );

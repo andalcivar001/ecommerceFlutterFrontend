@@ -24,6 +24,7 @@ import 'package:ecommerce_flutter/src/domain/useCases/category/DeleteCategoryUse
 import 'package:ecommerce_flutter/src/domain/useCases/category/GetCategoryUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/category/UpdateCategoryUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/products/CreateProductUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/useCases/products/DeleteProductUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/products/GetProductsByCategory.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/products/ProductUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/products/UpdateProductUseCase.dart';
@@ -100,5 +101,6 @@ abstract class Appmodule {
     create: CreateProductUseCase(productRepository),
     getProductsByCategory: GetProductsByCategory(productRepository),
     update: UpdateProductUseCase(productRepository),
+    delete: DeleteProductUseCase(productRepository),
   );
 }

@@ -138,7 +138,7 @@ class ProductService {
       request.fields['name'] = product.name;
       request.fields['description'] = product.description;
       request.fields['price'] = product.price.toString();
-      request.fields['images_to_update[]'] = imagesToUpdate.toString();
+      request.fields['images_to_update'] = json.encode(imagesToUpdate);
 
       final response = await request.send();
       final data = json.decode(
@@ -147,6 +147,29 @@ class ProductService {
       if (response.statusCode == 201 || response.statusCode == 200) {
         Product productResponse = Product.fromJson(data);
         return Success(productResponse);
+      } else {
+        return Error(listToString(data['message']));
+      }
+    } catch (e) {
+      print('Error: $e');
+      return Error(e.toString());
+    }
+  }
+
+  Future<Resource<bool>> delete(int id) async {
+    try {
+      print('Metodo actualizar sin imagen');
+      Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/products/$id');
+
+      Map<String, String> headers = {
+        "Content-Type": "application/json",
+        "Authorization": await token,
+      };
+
+      final response = await http.delete(url, headers: headers);
+      final data = json.decode(response.body);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        return Success(true);
       } else {
         return Error(listToString(data['message']));
       }

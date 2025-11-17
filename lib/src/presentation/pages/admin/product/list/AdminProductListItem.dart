@@ -1,8 +1,6 @@
-import 'package:ecommerce_flutter/src/domain/models/Category.dart';
 import 'package:ecommerce_flutter/src/domain/models/Product.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/admin/category/list/bloc/AdminCategoryListBloc.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/admin/category/list/bloc/AdminCategoryListEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/product/list/bloc/AdminProductListBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/list/bloc/AdminProductListEvent.dart';
 import 'package:flutter/material.dart';
 
 class AdminProductListItem extends StatelessWidget {
@@ -60,7 +58,7 @@ class AdminProductListItem extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                //  bloc?.add(AdminCategoryListDeleteCategory(id: category!.id!));
+                bloc?.add(DeleteProduct(id: product!.id!));
               },
               icon: Icon(Icons.delete),
             ),

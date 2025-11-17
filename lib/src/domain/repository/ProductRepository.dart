@@ -12,4 +12,6 @@ abstract class ProductRepository {
     List<File>? images,
     List<int>? imagesToUpdate,
   );
+
+  Future<Resource<bool>> delete(int id);
 }

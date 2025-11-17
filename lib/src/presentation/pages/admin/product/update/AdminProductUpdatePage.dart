@@ -2,6 +2,8 @@ import 'package:ecommerce_flutter/src/domain/models/Product.dart';
 import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/category/list/bloc/AdminCategoryListBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/category/list/bloc/AdminCategoryListEvent.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/list/bloc/AdminProductListBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/list/bloc/AdminProductListEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/product/update/AdminProductUpdateContent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/product/update/bloc/AdminProductUpdateBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/product/update/bloc/AdminProductUpdateEvent.dart';
@@ -30,6 +32,12 @@ class _AdminProductUpdatePageState extends State<AdminProductUpdatePage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _bloc?.add(AdminProductUpdateResetForm());
+  }
+
+  @override
   Widget build(BuildContext context) {
     product = ModalRoute.of(context)?.settings.arguments as Product?;
     // se inicializa la variable _bloc
@@ -39,10 +47,10 @@ class _AdminProductUpdatePageState extends State<AdminProductUpdatePage> {
         listener: (context, state) {
           final responseState = state.response;
           if (responseState is Success) {
-            // context.read<AdminCategoryListBloc>().add(
-            //   AdminCategoryListGetCategory(),
-            // );
-            _bloc?.add(AdminProductUpdateResetForm());
+            context.read<AdminProductListBloc>().add(
+              GetProductsByCategoryEvent(idCategory: product!.idCategory),
+            );
+            // _bloc?.add(AdminProductUpdateResetForm());
 
             Fluttertoast.showToast(
               msg: 'El producto se actualizo correectamente',

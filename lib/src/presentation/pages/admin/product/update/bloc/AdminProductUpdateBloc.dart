@@ -100,19 +100,9 @@ class AdminProductUpdateBloc
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       if (event.numberFile == 1) {
-        emit(
-          state.copyWith(
-            image1: File(image.path),
-            //formKey: formKey
-          ),
-        );
+        emit(state.copyWith(image1: File(image.path), formKey: formKey));
       } else if (event.numberFile == 2) {
-        emit(
-          state.copyWith(
-            image2: File(image.path),
-            //formKey: formKey
-          ),
-        );
+        emit(state.copyWith(image2: File(image.path), formKey: formKey));
       }
     }
   }
@@ -125,19 +115,9 @@ class AdminProductUpdateBloc
     final XFile? image = await picker.pickImage(source: ImageSource.camera);
     if (image != null) {
       if (event.numberFile == 1) {
-        emit(
-          state.copyWith(
-            image1: File(image.path),
-            //formKey: formKey
-          ),
-        );
+        emit(state.copyWith(image1: File(image.path), formKey: formKey));
       } else if (event.numberFile == 2) {
-        emit(
-          state.copyWith(
-            image2: File(image.path),
-            //formKey: formKey
-          ),
-        );
+        emit(state.copyWith(image2: File(image.path), formKey: formKey));
       }
     }
   }

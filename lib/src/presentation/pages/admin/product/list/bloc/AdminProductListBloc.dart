@@ -10,6 +10,7 @@ class AdminProductListBloc
 
   AdminProductListBloc(this.productUseCases) : super(AdminProductListState()) {
     on<GetProductsByCategoryEvent>(_onGetProductsByCategory);
+    on<DeleteProduct>(_onDeleteProduct);
   }
 
   Future<void> _onGetProductsByCategory(
@@ -18,8 +19,19 @@ class AdminProductListBloc
   ) async {
     emit(state.copyWith(response: Loading()));
 
-    Resource resource = await productUseCases.getProductsByCategory.run(
+    Resource response = await productUseCases.getProductsByCategory.run(
       event.idCategory,
     );
+
+    emit(state.copyWith(response: response));
+  }
+
+  Future<void> _onDeleteProduct(
+    DeleteProduct event,
+    Emitter<AdminProductListState> emit,
+  ) async {
+    emit(state.copyWith(response: Loading()));
+
+    Resource response = await productUseCases.delete.run(event.id);
   }
 }

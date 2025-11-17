@@ -33,10 +33,7 @@ class AdminProductUpdateState extends Equatable {
   });
 
   AdminProductUpdateState resetForm() {
-    return AdminProductUpdateState(
-      name: const BlocFormItem(error: 'Ingrese el nombre'),
-      description: const BlocFormItem(error: 'Ingrese la descripcion'),
-    );
+    return AdminProductUpdateState(image1: null, image2: null);
   }
 
   toProduct() => Product(

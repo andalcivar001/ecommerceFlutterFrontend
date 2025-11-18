@@ -23,8 +23,10 @@ class CategoryRepositoryImpl extends CategoryRepository {
   @override
   Future<Resource<Category>> update(int id, Category category, File? file) {
     if (file == null) {
+      print('entro al update');
       return categoryService.update(id, category);
     } else {
+      print('entro a updateWithImage');
       return categoryService.updateImage(id, category, file);
     }
   }

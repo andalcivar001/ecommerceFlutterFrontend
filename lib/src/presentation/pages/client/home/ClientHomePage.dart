@@ -2,6 +2,8 @@ import 'package:ecommerce_flutter/main.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/home/bloc/ClientHomeBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/home/bloc/ClientHomeEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/home/bloc/ClientHomeState.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/home/category/list/AdminCategoryListPage.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/profile/info/ProfileInfoPage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/roles/RolesPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +18,11 @@ class ClientHomePage extends StatefulWidget {
 class _ClientHomePageState extends State<ClientHomePage> {
   ClientHomeBloc? _bloc;
 
-  List<Widget> pageList = <Widget>[RolesPage()];
+  List<Widget> pageList = <Widget>[
+    ClientCategoryListPage(),
+    ProfileInfoPage(),
+    RolesPage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +44,26 @@ class _ClientHomePageState extends State<ClientHomePage> {
                   ),
                 ),
                 ListTile(
-                  title: Text('Roles'),
+                  title: Text('Categprías'),
                   selected: state.pageIndex == 0,
                   onTap: () {
                     _bloc?.add(ClientHomeChangeDrawerPage(pageIndex: 0));
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  title: Text('Perfil de usuairo'),
+                  selected: state.pageIndex == 1,
+                  onTap: () {
+                    _bloc?.add(ClientHomeChangeDrawerPage(pageIndex: 1));
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  title: Text('Roles'),
+                  selected: state.pageIndex == 2,
+                  onTap: () {
+                    _bloc?.add(ClientHomeChangeDrawerPage(pageIndex: 2));
                     Navigator.pop(context);
                   },
                 ),

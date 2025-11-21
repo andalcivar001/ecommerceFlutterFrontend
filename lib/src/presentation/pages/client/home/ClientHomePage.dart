@@ -2,7 +2,7 @@ import 'package:ecommerce_flutter/main.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/home/bloc/ClientHomeBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/home/bloc/ClientHomeEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/home/bloc/ClientHomeState.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/client/home/category/list/AdminCategoryListPage.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/category/list/ClientCategoryListPage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/profile/info/ProfileInfoPage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/roles/RolesPage.dart';
 import 'package:flutter/material.dart';

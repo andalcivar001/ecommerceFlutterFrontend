@@ -1,9 +1,9 @@
 import 'package:ecommerce_flutter/src/domain/models/Category.dart';
 import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/client/home/category/list/AdminCategoryListItem.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/client/home/category/list/bloc/ClientCategoryListBloc.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/client/home/category/list/bloc/ClientCategoryListEvent.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/client/home/category/list/bloc/ClientCategoryListState.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/category/list/ClientCategoryListItem.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/category/list/bloc/ClientCategoryListBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/category/list/bloc/ClientCategoryListEvent.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/category/list/bloc/ClientCategoryListState.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -31,13 +31,6 @@ class _ClientCategoryListPageState extends State<ClientCategoryListPage> {
   Widget build(BuildContext context) {
     _bloc = BlocProvider.of<ClientCategoryListBloc>(context);
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, 'Client/category/create');
-        },
-        backgroundColor: Colors.black,
-        child: Icon(Icons.add, color: Colors.white),
-      ),
       body: BlocListener<ClientCategoryListBloc, ClientCategoryListState>(
         listener: (context, state) {
           final responseState = state.response;

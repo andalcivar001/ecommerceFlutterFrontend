@@ -1,4 +1,6 @@
 import 'package:ecommerce_flutter/src/domain/models/Product.dart';
+import 'package:ecommerce_flutter/src/presentation/widgets/DefaultButton.dart';
+import 'package:ecommerce_flutter/src/presentation/widgets/DefaultIconBack.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 
@@ -9,14 +11,72 @@ class ClientProductDetailContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Stack(
       children: [
-        _imageSlideShow(),
-        _textName(),
-        _textDescription(),
-        _textPrice(),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _imageSlideShow(),
+            _textName(),
+            _textDescription(),
+            _textPrice(),
+            Spacer(),
+            Divider(color: Colors.grey[300], height: 0, thickness: 2),
+            _actionShoppingBag(),
+          ],
+        ),
+        DefaultIconBack(marginLeft: 15, marginTop: 35, color: Colors.black),
       ],
+    );
+  }
+
+  Widget _actionShoppingBag() {
+    return Container(
+      color: Colors.grey[200],
+      width: double.infinity,
+      padding: EdgeInsets.only(top: 15, bottom: 20, left: 30, right: 30),
+      child: Row(
+        children: [
+          Container(
+            width: 40,
+            height: 55,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: Colors.grey[300],
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                bottomLeft: Radius.circular(25),
+              ),
+            ),
+            child: Text('-', style: TextStyle(fontSize: 25)),
+          ),
+          Container(
+            width: 40,
+            height: 55,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(color: Colors.grey[300]),
+            child: Text('0', style: TextStyle(fontSize: 25)),
+          ),
+          Container(
+            width: 40,
+            height: 55,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: Colors.grey[300],
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(25),
+                bottomRight: Radius.circular(25),
+              ),
+            ),
+            child: Text('+', style: TextStyle(fontSize: 25)),
+          ),
+          Spacer(),
+          Container(
+            width: 150,
+            child: DefaultButton(text: 'AGREGAR', onPressed: () {}),
+          ),
+        ],
+      ),
     );
   }
 

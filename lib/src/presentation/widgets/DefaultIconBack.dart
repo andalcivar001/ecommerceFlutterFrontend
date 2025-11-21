@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 class DefaultIconBack extends StatelessWidget {
   double marginLeft = 0;
   double marginTop = 0;
-  DefaultIconBack({required this.marginLeft, required this.marginTop});
+  Color color;
+  DefaultIconBack({
+    required this.marginLeft,
+    required this.marginTop,
+    this.color = Colors.white,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +19,7 @@ class DefaultIconBack extends StatelessWidget {
         onPressed: () {
           Navigator.pop(context);
         },
-        icon: Icon(Icons.arrow_back_ios, color: Colors.white, size: 35),
+        icon: Icon(Icons.arrow_back_ios, color: color, size: 35),
       ),
     );
   }

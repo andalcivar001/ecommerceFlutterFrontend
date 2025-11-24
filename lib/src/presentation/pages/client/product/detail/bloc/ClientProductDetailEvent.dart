@@ -8,25 +8,31 @@ abstract class ClientProductDetailEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+class ResetStateClientProductDetail extends ClientProductDetailEvent {
+  const ResetStateClientProductDetail();
+}
+
 class InitEventClientProductDetail extends ClientProductDetailEvent {
   const InitEventClientProductDetail();
 }
 
 class GetProductsClientProductDetail extends ClientProductDetailEvent {
-  const GetProductsClientProductDetail();
+  final Product product;
+  const GetProductsClientProductDetail({required this.product});
+
+  @override
+  List<Object?> get props => [product];
 }
 
 class AddItemClientProductDetail extends ClientProductDetailEvent {
   const AddItemClientProductDetail();
   @override
-  // TODO: implement props
   List<Object?> get props => [];
 }
 
 class SubstractItemClientProductDetail extends ClientProductDetailEvent {
   const SubstractItemClientProductDetail();
   @override
-  // TODO: implement props
   List<Object?> get props => [];
 }
 
@@ -36,6 +42,5 @@ class AddProductToShoppingBagClientProductDetail
   const AddProductToShoppingBagClientProductDetail({required this.product});
 
   @override
-  // TODO: implement props
   List<Object?> get props => [product];
 }

@@ -20,6 +20,7 @@ import 'package:ecommerce_flutter/src/presentation/pages/client/category/list/bl
 import 'package:ecommerce_flutter/src/presentation/pages/client/home/bloc/ClientHomeBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/product/detail/bloc/ClientProductDetailBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/product/list/bloc/ClientProductListBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/bloc/ClientShoppingBagBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/profile/info/bloc/ProfileInfoBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/profile/info/bloc/ProfileInfoEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/profile/update/bloc/ProfileUpdateBloc.dart';
@@ -88,5 +89,9 @@ List<BlocProvider> blocProviders = [
   BlocProvider<ClientProductDetailBloc>(
     create:
         (context) => ClientProductDetailBloc(locator<ShoppingBagUseCases>()),
+  ),
+
+  BlocProvider<ClientShoppingBagBloc>(
+    create: (context) => ClientShoppingBagBloc(locator<ShoppingBagUseCases>()),
   ),
 ];

@@ -21,8 +21,8 @@ class ShoppingBagRepositoryImpl implements ShoppingBagRepository {
       if (index == -1) {
         if (product.quantity == null) {
           product.quantity ??= 1;
-          selectedProducts.add(product);
         }
+        selectedProducts.add(product);
       } else {
         // si existe el producto dentro de la lista
         selectedProducts[index].quantity = product.quantity;

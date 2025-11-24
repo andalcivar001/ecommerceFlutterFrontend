@@ -14,6 +14,7 @@ class ClientProductDetailBloc
     on<AddItemClientProductDetail>(_onAddItem);
     on<SubstractItemClientProductDetail>(_onSubstractItem);
     on<AddProductToShoppingBagClientProductDetail>(_onAddProductToShoppingBag);
+    on<ResetStateClientProductDetail>(_onResetState);
   }
 
   Future<void> _onGetProducts(
@@ -21,9 +22,13 @@ class ClientProductDetailBloc
     Emitter<ClientProductDetailState> emit,
   ) async {
     List<Product> products = await shoppingBagUseCases.getProducts.run();
-    products.forEach((product) {
-      print('SHOPPING BAG: ${product.toJson()}');
-    });
+    int index = products.indexWhere(
+      (producto) => producto.id == event.product.id,
+    );
+
+    if (index != -1) {
+      emit(state.copyWith(quantity: products[index].quantity));
+    }
   }
 
   Future<void> _onAddItem(
@@ -47,6 +52,14 @@ class ClientProductDetailBloc
     Emitter<ClientProductDetailState> emit,
   ) async {
     event.product.quantity = state.quantity;
-    shoppingBagUseCases.add.run(event.product);
+    print('AGREGANDO PRODUCTO: ${event.product.toJson()}');
+    await shoppingBagUseCases.add.run(event.product);
+  }
+
+  Future<void> _onResetState(
+    ResetStateClientProductDetail event,
+    Emitter<ClientProductDetailState> emit,
+  ) async {
+    emit(state.copyWith(quantity: 0));
   }
 }

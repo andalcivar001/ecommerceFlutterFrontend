@@ -6,6 +6,7 @@ import 'package:ecommerce_flutter/src/presentation/widgets/DefaultButton.dart';
 import 'package:ecommerce_flutter/src/presentation/widgets/DefaultIconBack.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ClientProductDetailContent extends StatelessWidget {
   ClientProductDetailBloc? bloc;
@@ -93,6 +94,15 @@ class ClientProductDetailContent extends StatelessWidget {
             child: DefaultButton(
               text: 'AGREGAR',
               onPressed: () {
+                Fluttertoast.showToast(
+                  msg: 'Producto agregado al carrito',
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.black54,
+                  textColor: Colors.white,
+                  fontSize: 16.0,
+                );
                 bloc?.add(
                   AddProductToShoppingBagClientProductDetail(product: product!),
                 );

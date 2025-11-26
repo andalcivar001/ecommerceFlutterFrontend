@@ -4,7 +4,7 @@ import 'package:ecommerce_flutter/src/presentation/widgets/DefaultButton.dart';
 import 'package:flutter/material.dart';
 
 class ClientShoppingBagBottomBar extends StatelessWidget {
-  ClientShoppingBagState? state;
+  ClientShoppingBagState state;
 
   ClientShoppingBagBottomBar(this.state);
 
@@ -21,12 +21,17 @@ class ClientShoppingBagBottomBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                'TOTAL: \$${state?.total}',
+                'TOTAL: \$${state.total}',
                 style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
               ),
               Container(
                 width: 180,
-                child: DefaultButton(text: 'Confirmar Orden', onPressed: () {}),
+                child: DefaultButton(
+                  text: 'CONFIRMAR ORDEN',
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'client/address/list');
+                  },
+                ),
               ),
             ],
           ),

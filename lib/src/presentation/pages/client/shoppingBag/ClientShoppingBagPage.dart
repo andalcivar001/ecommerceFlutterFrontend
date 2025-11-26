@@ -3,7 +3,6 @@ import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/Clie
 import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/bloc/ClientShoppingBagBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/bloc/ClientShoppingBagEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/bloc/ClientShoppingBagState.dart';
-import 'package:ecommerce_flutter/src/presentation/widgets/DefaultButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -44,12 +43,7 @@ class _ClientShoppingBagPageState extends State<ClientShoppingBagPage> {
       bottomNavigationBar:
           BlocBuilder<ClientShoppingBagBloc, ClientShoppingBagState>(
             builder: (context, state) {
-              return ListView.builder(
-                itemCount: state.products.length,
-                itemBuilder: (context, index) {
-                  return ClientShoppingBagBottomBar(state);
-                },
-              );
+              return ClientShoppingBagBottomBar(state);
             },
           ),
     );

@@ -2,6 +2,7 @@ import 'package:ecommerce_flutter/src/domain/models/Product.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/shoppingBag/ShoppingBagUseCases.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/bloc/ClientShoppingBagEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/bloc/ClientShoppingBagState.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ClientShoppingBagBloc
@@ -16,6 +17,7 @@ class ClientShoppingBagBloc
     on<RemoveItemClientShoppingBag>(_onRemoveItem);
     on<GetTotalClientShoppingBag>(_onGetTotal);
   }
+
   Future<void> _onGetShoppingBag(
     GetClientShoppingBag event,
     Emitter<ClientShoppingBagState> emit,
@@ -31,7 +33,7 @@ class ClientShoppingBagBloc
   ) async {
     event.product.quantity = event.product.quantity! + 1;
     await shoppingBagUseCases.add.run(event.product);
-    add(GetTotalClientShoppingBag());
+    add(GetClientShoppingBag());
   }
 
   Future<void> _onSubstractItem(
@@ -41,7 +43,7 @@ class ClientShoppingBagBloc
     if (event.product.quantity! > 1) {
       event.product.quantity = event.product.quantity! - 1;
       await shoppingBagUseCases.add.run(event.product);
-      add(GetTotalClientShoppingBag());
+      add(GetClientShoppingBag());
     }
   }
 
@@ -50,7 +52,7 @@ class ClientShoppingBagBloc
     Emitter<ClientShoppingBagState> emit,
   ) async {
     await shoppingBagUseCases.deleteItem.run(event.product);
-    add(GetTotalClientShoppingBag());
+    add(GetClientShoppingBag());
   }
 
   Future<void> _onGetTotal(

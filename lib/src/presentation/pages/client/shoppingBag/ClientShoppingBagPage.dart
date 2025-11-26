@@ -1,3 +1,4 @@
+import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/ClientShoppingBagBottomBar.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/ClientShoppingBagItem.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/bloc/ClientShoppingBagBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/bloc/ClientShoppingBagEvent.dart';
@@ -21,6 +22,7 @@ class _ClientShoppingBagPageState extends State<ClientShoppingBagPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       bloc?.add(GetClientShoppingBag());
+      bloc?.add(GetTotalClientShoppingBag());
     });
   }
 
@@ -39,32 +41,17 @@ class _ClientShoppingBagPageState extends State<ClientShoppingBagPage> {
           );
         },
       ),
-      bottomNavigationBar: Container(
-        height: 100,
-        color: Colors.grey[300],
-        child: Column(
-          children: [
-            Divider(color: Colors.grey[400], height: 0),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  'Total: \$0',
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-                ),
-                Container(
-                  width: 180,
-                  child: DefaultButton(
-                    text: 'Confirmar Orden',
-                    onPressed: () {},
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+      bottomNavigationBar:
+          BlocBuilder<ClientShoppingBagBloc, ClientShoppingBagState>(
+            builder: (context, state) {
+              return ListView.builder(
+                itemCount: state.products.length,
+                itemBuilder: (context, index) {
+                  return ClientShoppingBagBottomBar(state);
+                },
+              );
+            },
+          ),
     );
   }
 }

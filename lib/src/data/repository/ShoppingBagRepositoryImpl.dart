@@ -1,6 +1,7 @@
 import 'package:ecommerce_flutter/src/data/dataSource/local/SharedPref.dart';
 import 'package:ecommerce_flutter/src/domain/models/Product.dart';
 import 'package:ecommerce_flutter/src/domain/repository/ShoppingBagRepository.dart';
+import 'package:injectable/injectable.dart';
 
 class ShoppingBagRepositoryImpl implements ShoppingBagRepository {
   SharedPref sharedPref;
@@ -55,6 +56,21 @@ class ShoppingBagRepositoryImpl implements ShoppingBagRepository {
     } else {
       List<Product> selectedProducts = Product.fromJsonList(data).toList();
       return selectedProducts;
+    }
+  }
+
+  @override
+  Future<double> getTotal() async {
+    final data = await sharedPref.read('shopping_bag');
+    if (data == null) {
+      return 0;
+    } else {
+      double total = 0;
+      List<Product> selectedProducts = Product.fromJsonList(data).toList();
+      selectedProducts.forEach((product) {
+        total = total + (product.price * product.quantity!);
+      });
+      return total;
     }
   }
 }

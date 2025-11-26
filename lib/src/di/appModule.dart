@@ -34,6 +34,7 @@ import 'package:ecommerce_flutter/src/domain/useCases/shoppingBag/AddShoppingBag
 import 'package:ecommerce_flutter/src/domain/useCases/shoppingBag/DeleteItemShoppingBagUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/shoppingBag/DeleteShoppingBagUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/shoppingBag/GetProductsShoppingBagUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/useCases/shoppingBag/GetTotalShoppingBagUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/shoppingBag/ShoppingBagUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/users/UpdateUserUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/users/UsersUseCases.dart';
@@ -121,5 +122,6 @@ abstract class Appmodule {
     getProducts: GetProductsShoppingBagUseCase(shoppingBagRepository),
     deleteItem: DeleteItemShoppingBagUseCase(shoppingBagRepository),
     deleteShoppingBag: DeleteShoppingBagUseCase(shoppingBagRepository),
+    getTotal: GetTotalShoppingBagUseCase(shoppingBagRepository),
   );
 }

@@ -1,7 +1,9 @@
 import 'package:ecommerce_flutter/src/data/dataSource/local/SharedPref.dart';
+import 'package:ecommerce_flutter/src/data/dataSource/remote/services/AddressService.dart';
 import 'package:ecommerce_flutter/src/data/dataSource/remote/services/CategoryService.dart';
 import 'package:ecommerce_flutter/src/data/dataSource/remote/services/ProductService.dart';
 import 'package:ecommerce_flutter/src/data/dataSource/remote/services/UserService.dart';
+import 'package:ecommerce_flutter/src/data/repository/AddressRepositoryImpl.dart';
 import 'package:ecommerce_flutter/src/data/repository/AuthRepositoryImpl.dart';
 import 'package:ecommerce_flutter/src/data/dataSource/remote/services/AuthService.dart';
 import 'package:ecommerce_flutter/src/data/repository/CategoryRepositoryImpl.dart';
@@ -9,11 +11,14 @@ import 'package:ecommerce_flutter/src/data/repository/ProductRepositoryImpl.dart
 import 'package:ecommerce_flutter/src/data/repository/ShoppingBagRepositoryImpl.dart';
 import 'package:ecommerce_flutter/src/data/repository/UserRepositoryImpl.dart';
 import 'package:ecommerce_flutter/src/domain/models/AuthResponse.dart';
+import 'package:ecommerce_flutter/src/domain/repository/AddressRepository.dart';
 import 'package:ecommerce_flutter/src/domain/repository/AuthRepository.dart';
 import 'package:ecommerce_flutter/src/domain/repository/CategoryRepository.dart';
 import 'package:ecommerce_flutter/src/domain/repository/ProductRepository.dart';
 import 'package:ecommerce_flutter/src/domain/repository/ShoppingBagRepository.dart';
 import 'package:ecommerce_flutter/src/domain/repository/UserRepositoy.dart';
+import 'package:ecommerce_flutter/src/domain/useCases/Address/AddressUseCases.dart';
+import 'package:ecommerce_flutter/src/domain/useCases/Address/CreateAddressUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/auth/AuthUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/auth/GetUSerSessionUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/auth/LoginUseCase.dart';
@@ -69,6 +74,9 @@ abstract class Appmodule {
   ProductService get productService => ProductService(token);
 
   @injectable
+  AddressService get addressService => AddressService(token);
+
+  @injectable
   AuthRepository get authrepository =>
       Authrepositoryimpl(authService, sharedPref);
 
@@ -86,6 +94,10 @@ abstract class Appmodule {
   @injectable
   ShoppingBagRepository get shoppingBagRepository =>
       ShoppingBagRepositoryImpl(sharedPref);
+
+  @injectable
+  AddressRepository get addressRepository =>
+      AddressRepositoryImpl(addressService);
 
   @injectable
   AuthUseCases get authuseCases => AuthUseCases(
@@ -124,4 +136,8 @@ abstract class Appmodule {
     deleteShoppingBag: DeleteShoppingBagUseCase(shoppingBagRepository),
     getTotal: GetTotalShoppingBagUseCase(shoppingBagRepository),
   );
+
+  @injectable
+  AddressUseCases get addressUseCases =>
+      AddressUseCases(create: CreateAddressUseCase(addressRepository));
 }

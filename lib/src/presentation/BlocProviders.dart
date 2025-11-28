@@ -1,4 +1,5 @@
 import 'package:ecommerce_flutter/injection.dart';
+import 'package:ecommerce_flutter/src/domain/useCases/Address/AddressUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/auth/AuthUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/category/CategoryUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/products/ProductUseCases.dart';
@@ -98,7 +99,9 @@ List<BlocProvider> blocProviders = [
   ),
   BlocProvider<ClientAddressCreateBloc>(
     create:
-        (context) =>
-            ClientAddressCreateBloc()..add(InitEventClientAddressCreate()),
+        (context) => ClientAddressCreateBloc(
+          locator<AddressUseCases>(),
+          locator<AuthUseCases>(),
+        )..add(InitEventClientAddressCreate()),
   ),
 ];

@@ -1,8 +1,10 @@
+import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/address/create/ClientAddressCreateContent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/address/create/bloc/ClientAddressCreateBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/address/create/bloc/ClientAddressCreateState.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ClientAddressCreatePage extends StatefulWidget {
   const ClientAddressCreatePage({super.key});
@@ -22,23 +24,23 @@ class _ClientAddressCreatePageState extends State<ClientAddressCreatePage> {
     return Scaffold(
       body: BlocListener<ClientAddressCreateBloc, ClientAddressCreateState>(
         listener: (context, state) {
-          // final responseState = state.response;
-          // if (responseState is Success) {
-          //   context.read<AdminCategoryListBloc>().add(
-          //     AdminCategoryListGetCategory(),
-          //   );
-          //   _bloc?.add(AdminCategoryCreateResetForm());
+          final responseState = state.response;
+          if (responseState is Success) {
+            // context.read<AdminCategoryListBloc>().add(
+            //   AdminCategoryListGetCategory(),
+            // );
+            // _bloc?.add(AdminCategoryCreateResetForm());
 
-          //   Fluttertoast.showToast(
-          //     msg: 'La categoria fue creada correctamente',
-          //     toastLength: Toast.LENGTH_LONG,
-          //   );
-          // } else if (responseState is Error) {
-          //   Fluttertoast.showToast(
-          //     msg: responseState.message,
-          //     toastLength: Toast.LENGTH_LONG,
-          //   );
-          // }
+            Fluttertoast.showToast(
+              msg: 'La dirección fue creada correctamente',
+              toastLength: Toast.LENGTH_LONG,
+            );
+          } else if (responseState is Error) {
+            Fluttertoast.showToast(
+              msg: responseState.message,
+              toastLength: Toast.LENGTH_LONG,
+            );
+          }
         },
         child: BlocBuilder<ClientAddressCreateBloc, ClientAddressCreateState>(
           builder: (context, state) {

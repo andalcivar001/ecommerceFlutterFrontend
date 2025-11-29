@@ -11,6 +11,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:ecommerce_flutter/src/data/dataSource/local/SharedPref.dart'
     as _i838;
+import 'package:ecommerce_flutter/src/data/dataSource/remote/services/AddressService.dart'
+    as _i993;
 import 'package:ecommerce_flutter/src/data/dataSource/remote/services/AuthService.dart'
     as _i543;
 import 'package:ecommerce_flutter/src/data/dataSource/remote/services/CategoryService.dart'
@@ -20,6 +22,8 @@ import 'package:ecommerce_flutter/src/data/dataSource/remote/services/ProductSer
 import 'package:ecommerce_flutter/src/data/dataSource/remote/services/UserService.dart'
     as _i429;
 import 'package:ecommerce_flutter/src/di/appModule.dart' as _i896;
+import 'package:ecommerce_flutter/src/domain/repository/AddressRepository.dart'
+    as _i879;
 import 'package:ecommerce_flutter/src/domain/repository/AuthRepository.dart'
     as _i148;
 import 'package:ecommerce_flutter/src/domain/repository/CategoryRepository.dart'
@@ -30,6 +34,8 @@ import 'package:ecommerce_flutter/src/domain/repository/ShoppingBagRepository.da
     as _i747;
 import 'package:ecommerce_flutter/src/domain/repository/UserRepositoy.dart'
     as _i6;
+import 'package:ecommerce_flutter/src/domain/useCases/Address/AddressUseCases.dart'
+    as _i742;
 import 'package:ecommerce_flutter/src/domain/useCases/auth/AuthUseCases.dart'
     as _i322;
 import 'package:ecommerce_flutter/src/domain/useCases/category/CategoryUseCases.dart'
@@ -57,6 +63,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i429.UserService>(() => appmodule.userService);
     gh.factory<_i632.CategoryService>(() => appmodule.categoryService);
     gh.factory<_i463.ProductService>(() => appmodule.productService);
+    gh.factory<_i993.AddressService>(() => appmodule.addressService);
     gh.factory<_i148.AuthRepository>(() => appmodule.authrepository);
     gh.factory<_i6.UserRepository>(() => appmodule.userRepository);
     gh.factory<_i285.CategoryRepository>(() => appmodule.categoryRepository);
@@ -64,11 +71,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i747.ShoppingBagRepository>(
       () => appmodule.shoppingBagRepository,
     );
+    gh.factory<_i879.AddressRepository>(() => appmodule.addressRepository);
     gh.factory<_i322.AuthUseCases>(() => appmodule.authuseCases);
     gh.factory<_i525.UsersUseCases>(() => appmodule.usersUseCases);
     gh.factory<_i967.CategoryUseCases>(() => appmodule.categoryUseCases);
     gh.factory<_i778.ProductUseCases>(() => appmodule.productUseCases);
     gh.factory<_i190.ShoppingBagUseCases>(() => appmodule.shoppingBagUseCases);
+    gh.factory<_i742.AddressUseCases>(() => appmodule.addressUseCases);
     return this;
   }
 }

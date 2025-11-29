@@ -12,4 +12,9 @@ class AddressRepositoryImpl implements AddressRepository {
   Future<Resource<Address>> create(Address address) {
     return addressService.create(address);
   }
+
+  @override
+  Future<Resource<List<Address>>> getUserAddress(int idUser) {
+    return addressService.getUserAddress(idUser);
+  }
 }

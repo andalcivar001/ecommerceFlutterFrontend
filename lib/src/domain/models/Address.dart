@@ -17,6 +17,15 @@ class Address {
     required this.idUser,
   });
 
+  static List<Address> fromJsonList(List<dynamic> jsonList) {
+    List<Address> toList = [];
+    jsonList.forEach((item) {
+      Address address = Address.fromJson(item);
+      toList.add(address);
+    });
+    return toList;
+  }
+
   factory Address.fromJson(Map<String, dynamic> json) => Address(
     id: json["id"],
     address: json["address"],

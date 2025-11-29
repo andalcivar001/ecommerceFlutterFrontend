@@ -19,6 +19,7 @@ import 'package:ecommerce_flutter/src/presentation/pages/auth/register/bloc/Regi
 import 'package:ecommerce_flutter/src/presentation/pages/auth/register/bloc/RegisterEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/address/create/bloc/ClientAddressCreateBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/address/create/bloc/ClientAddressCreateEvent.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/address/list/bloc/ClientAddressListBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/category/list/bloc/ClientCategoryListBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/home/bloc/ClientHomeBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/product/detail/bloc/ClientProductDetailBloc.dart';
@@ -103,5 +104,12 @@ List<BlocProvider> blocProviders = [
           locator<AddressUseCases>(),
           locator<AuthUseCases>(),
         )..add(InitEventClientAddressCreate()),
+  ),
+  BlocProvider<ClientAddressListBloc>(
+    create:
+        (context) => ClientAddressListBloc(
+          locator<AddressUseCases>(),
+          locator<AuthUseCases>(),
+        ),
   ),
 ];

@@ -33,4 +33,27 @@ class AddressService {
       return Error(e.toString());
     }
   }
+
+  Future<Resource<List<Address>>> getUserAddress(int idUser) async {
+    try {
+      Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/address/user/$idUser');
+
+      Map<String, String> headers = {
+        "Content-Type": "application/json",
+        "Authorization": await token,
+      };
+
+      final response = await http.get(url, headers: headers);
+      final data = json.decode(response.body);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        List<Address> addressResponse = Address.fromJsonList(data);
+        return Success(addressResponse);
+      } else {
+        return Error(listToString(data['message']));
+      }
+    } catch (e) {
+      print('Error: $e');
+      return Error(e.toString());
+    }
+  }
 }

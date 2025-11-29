@@ -56,7 +56,7 @@ class ClientAddressCreateBloc
   ) async {
     emit(
       state.copyWith(
-        address: BlocFormItem(
+        neighborhood: BlocFormItem(
           value: event.neighborhood.value,
           error:
               event.neighborhood.value.isNotEmpty ? null : 'Ingresa el barrio',

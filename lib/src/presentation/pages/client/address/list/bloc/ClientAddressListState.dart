@@ -2,14 +2,18 @@ import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
 import 'package:equatable/equatable.dart';
 
 class ClientAddressListState extends Equatable {
+  final int? radioValue;
   final Resource? response;
 
-  ClientAddressListState({this.response});
+  ClientAddressListState({this.response, this.radioValue});
 
-  ClientAddressListState copyWith({Resource? response}) {
-    return ClientAddressListState(response: response);
+  ClientAddressListState copyWith({Resource? response, int? radioValue}) {
+    return ClientAddressListState(
+      response: response ?? this.response,
+      radioValue: radioValue ?? this.radioValue,
+    );
   }
 
   @override
-  List<Object?> get props => [response];
+  List<Object?> get props => [response, radioValue];
 }

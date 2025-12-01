@@ -56,4 +56,24 @@ class AddressService {
       return Error(e.toString());
     }
   }
+
+  Future<Resource<bool>> delete(int id) async {
+    try {
+      Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/address/$id');
+
+      Map<String, String> headers = {
+        "Content-Type": "application/json",
+        "Authorization": await token,
+      };
+      final response = await http.delete(url, headers: headers);
+      final data = json.decode(response.body);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        return Success(true);
+      } else {
+        return Error(listToString(data['message']));
+      }
+    } catch (e) {
+      return Error(e.toString());
+    }
+  }
 }

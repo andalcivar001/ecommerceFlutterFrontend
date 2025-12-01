@@ -46,7 +46,7 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
           final responseState = state.response;
           if (responseState is Success) {
             if (responseState.data is bool) {
-              //    _bloc?.add(ClientAddressListGetUserAddress());
+              _bloc?.add(ClientAddressListGetUserAddress());
             }
           }
           if (responseState is Error) {
@@ -61,10 +61,16 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
             final responseState = state.response;
             if (responseState is Success) {
               List<Address> address = responseState.data as List<Address>;
+              _bloc?.add(SetAddressSession(addressList: address));
               return ListView.builder(
                 itemCount: address.length,
                 itemBuilder: (context, index) {
-                  return ClientAddressListItem(_bloc, address[index], index);
+                  return ClientAddressListItem(
+                    _bloc,
+                    state,
+                    address[index],
+                    index,
+                  );
                 },
               );
             }

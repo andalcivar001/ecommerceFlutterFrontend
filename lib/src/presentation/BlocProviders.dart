@@ -1,5 +1,6 @@
 import 'package:ecommerce_flutter/injection.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/Address/AddressUseCases.dart';
+import 'package:ecommerce_flutter/src/domain/useCases/MercadoPago/MercadoPagoUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/auth/AuthUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/category/CategoryUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/useCases/products/ProductUseCases.dart';
@@ -22,6 +23,8 @@ import 'package:ecommerce_flutter/src/presentation/pages/client/address/create/b
 import 'package:ecommerce_flutter/src/presentation/pages/client/address/list/bloc/ClientAddressListBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/category/list/bloc/ClientCategoryListBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/home/bloc/ClientHomeBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/payment/form/bloc/ClientPaymentFormBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/payment/form/bloc/ClientPaymentFormEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/product/detail/bloc/ClientProductDetailBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/product/list/bloc/ClientProductListBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/bloc/ClientShoppingBagBloc.dart';
@@ -111,5 +114,11 @@ List<BlocProvider> blocProviders = [
           locator<AddressUseCases>(),
           locator<AuthUseCases>(),
         ),
+  ),
+  BlocProvider<ClientPaymentFormBloc>(
+    create:
+        (context) =>
+            ClientPaymentFormBloc(locator<MercadoPagoUseCases>())
+              ..add(ClientPaymentFormInitEvent()),
   ),
 ];

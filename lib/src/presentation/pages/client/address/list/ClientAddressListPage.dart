@@ -33,13 +33,24 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
     _bloc = BlocProvider.of<ClientAddressListBloc>(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text('Mis Direcciones')),
+      appBar: AppBar(
+        title: Text('Mis Direcciones'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, 'client/address/create');
+            },
+            icon: Icon(Icons.add, color: Colors.black),
+          ),
+        ],
+      ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, 'client/address/create');
+          Navigator.pushNamed(context, 'client/payment/form');
         },
         backgroundColor: Colors.black,
-        child: Icon(Icons.add, color: Colors.white),
+        child: Icon(Icons.check, color: Colors.white),
       ),
       body: BlocListener<ClientAddressListBloc, ClientAddressListState>(
         listener: (context, state) {

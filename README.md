@@ -22,3 +22,5 @@ se ejecuta este comando cada que se hacen cambios en el appModule... flutter pac
 se instala la extension Bloc por Felix Angelov
 
 path: ^1.9.1 ... libreria para trabajar directamente con archivos
+
+el dispose se ejecuta cuando se cierra de pantalla actual

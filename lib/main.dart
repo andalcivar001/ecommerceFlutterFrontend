@@ -11,6 +11,7 @@ import 'package:ecommerce_flutter/src/presentation/pages/auth/register/RegisterP
 import 'package:ecommerce_flutter/src/presentation/pages/client/address/create/ClientAddressCreatePage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/address/list/ClientAddressListPage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/home/ClientHomePage.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/payment/form/ClientPaymentFormPage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/product/detail/ClientProductDetailPage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/product/list/ClientProductListPage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/ClientShoppingBagPage.dart';
@@ -72,6 +73,8 @@ class MyApp extends StatelessWidget {
               (BuildContext context) => ClientAddressListPage(),
           'client/address/create':
               (BuildContext context) => ClientAddressCreatePage(),
+          'client/payment/form':
+              (BuildContext context) => ClientPaymentFormPage(),
         },
       ),
     );

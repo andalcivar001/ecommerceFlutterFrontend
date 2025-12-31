@@ -27,6 +27,7 @@ class _ClientPaymentFormPageState extends State<ClientPaymentFormPage> {
           onPressed: () {
             bloc?.add(FormSubmitCreditCard());
           },
+          color: Colors.blueAccent,
         ),
       ),
       body: BlocBuilder<ClientPaymentFormBloc, ClientPaymentFormState>(

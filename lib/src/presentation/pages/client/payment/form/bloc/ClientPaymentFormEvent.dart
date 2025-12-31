@@ -40,3 +40,19 @@ class CreditCardChanged extends ClientPaymentFormEvent {
 class FormSubmitCreditCard extends ClientPaymentFormEvent {
   const FormSubmitCreditCard();
 }
+
+class IdentificationTypeChanged extends ClientPaymentFormEvent {
+  final String identificationType;
+  const IdentificationTypeChanged({required this.identificationType});
+  @override
+  // TODO: implement props
+  List<Object?> get props => [identificationType];
+}
+
+class IdentificationNumberChanged extends ClientPaymentFormEvent {
+  final String identificationNumber;
+  const IdentificationNumberChanged({required this.identificationNumber});
+  @override
+  // TODO: implement props
+  List<Object?> get props => [identificationNumber];
+}

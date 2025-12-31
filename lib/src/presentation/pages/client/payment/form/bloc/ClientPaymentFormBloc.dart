@@ -14,6 +14,8 @@ class ClientPaymentFormBloc
     on<ClientPaymentFormInitEvent>(_onInit);
     on<CreditCardChanged>(_onCreditCart);
     on<FormSubmitCreditCard>(_onFormSubmitted);
+    on<IdentificationTypeChanged>(_onIdentificationTypeChanged);
+    on<IdentificationNumberChanged>(_onIdentificationNumberChanged);
   }
 
   final formKey = GlobalKey<FormState>();
@@ -64,5 +66,31 @@ class ClientPaymentFormBloc
     print('state.cvvCode ${state.cvvCode}');
     print('state.expiryDate ${state.expiryDate}');
     print('state.isCvvFocused ${state.isCvvFocused}');
+    print('state.identificationType ${state.identificationType}');
+    print('state.identificationNumber ${state.identificationNumber}');
+  }
+
+  Future<void> _onIdentificationTypeChanged(
+    IdentificationTypeChanged event,
+    Emitter<ClientPaymentFormState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        identificationType: event.identificationType,
+        formKey: formKey,
+      ),
+    );
+  }
+
+  Future<void> _onIdentificationNumberChanged(
+    IdentificationNumberChanged event,
+    Emitter<ClientPaymentFormState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        identificationNumber: event.identificationNumber,
+        formKey: formKey,
+      ),
+    );
   }
 }

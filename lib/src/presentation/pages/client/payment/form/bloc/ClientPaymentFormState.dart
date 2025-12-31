@@ -7,6 +7,8 @@ class ClientPaymentFormState extends Equatable {
   final String expiryDate;
   final String cardHolderName;
   final String cvvCode;
+  final String? identificationType;
+  final String identificationNumber;
   final bool isCvvFocused;
   final GlobalKey<FormState>? formKey;
   final List<MercadoPagoIdentificationType>? identificationTypes;
@@ -19,6 +21,8 @@ class ClientPaymentFormState extends Equatable {
     this.isCvvFocused = false,
     this.formKey,
     this.identificationTypes = const [],
+    this.identificationType,
+    this.identificationNumber = '',
   });
 
   ClientPaymentFormState copyWith({
@@ -29,6 +33,8 @@ class ClientPaymentFormState extends Equatable {
     bool? isCvvFocused,
     GlobalKey<FormState>? formKey,
     List<MercadoPagoIdentificationType>? identificationTypes,
+    String? identificationType,
+    String? identificationNumber,
   }) {
     return ClientPaymentFormState(
       cardNumber: cardNumber ?? this.cardNumber,
@@ -38,6 +44,8 @@ class ClientPaymentFormState extends Equatable {
       isCvvFocused: isCvvFocused ?? this.isCvvFocused,
       formKey: formKey,
       identificationTypes: identificationTypes ?? this.identificationTypes,
+      identificationType: identificationType ?? this.identificationType,
+      identificationNumber: identificationNumber ?? this.identificationNumber,
     );
   }
 
@@ -50,5 +58,7 @@ class ClientPaymentFormState extends Equatable {
     cvvCode,
     isCvvFocused,
     identificationTypes,
+    identificationType,
+    identificationNumber,
   ];
 }

@@ -1,6 +1,7 @@
 import 'package:ecommerce_flutter/src/presentation/pages/client/payment/form/bloc/ClientPaymentFormBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/payment/form/bloc/ClientPaymentFormEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/payment/form/bloc/ClientPaymentFormState.dart';
+import 'package:ecommerce_flutter/src/presentation/widgets/DefaultTextField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 
@@ -17,19 +18,40 @@ class ClientPaymentFormContent extends StatelessWidget {
         _creditCardWdiget(),
         _creditCardForm(),
         _dropDownIdentificationTypes(),
+        _textFieldIdentifitionNumber(),
       ],
     );
   }
 
-  Widget _dropDownIdentificationTypes() {
-    return DropdownButton(
-      hint: Text(
-        'Tipo de Identificacion',
-        style: TextStyle(color: Colors.grey, fontSize: 14),
+  Widget _textFieldIdentifitionNumber() {
+    return Container(
+      margin: EdgeInsets.only(left: 20, right: 20, top: 5),
+      child: DefaultTextField(
+        label: 'Numero de identificación',
+        icon: Icons.document_scanner,
+        onChanged: (text) {
+          bloc?.add(IdentificationNumberChanged(identificationNumber: text));
+        },
+        color: Colors.grey,
       ),
+    );
+  }
 
-      items: _dropDownItems(),
-      onChanged: (value) {},
+  Widget _dropDownIdentificationTypes() {
+    return Container(
+      margin: EdgeInsets.only(left: 17, right: 17, top: 5),
+      child: DropdownButton(
+        hint: Text(
+          'Tipo de Identificacion',
+          style: TextStyle(color: Colors.grey, fontSize: 14),
+        ),
+
+        items: _dropDownItems(),
+        value: state.identificationType,
+        onChanged: (value) {
+          bloc?.add(IdentificationTypeChanged(identificationType: value!));
+        },
+      ),
     );
   }
 
